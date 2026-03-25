@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Metis | Login</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/static/styles.css" />
 </head>
 <body>
@@ -11,17 +12,33 @@
 
     <!-- Header -->
     <header class="site-header">
+      <button class="hamburger" onclick="toggleMenu()" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
       <div class="logo">
         <img src="/static/logo4.png" alt="Metis Logo" />
+        <span>METIS</span>
       </div>
-      <nav class="nav-links">
-        <a href="index.html">Home</a>
-        <a href="assignment-brief.html">Assignment Brief Info</a>
-        <a href="assignment-calendar.html">Assignment Calendars</a>
-        <a href="mitigating-circumstances.html">Mitigating Circumstances</a>
-        <a href="contact.html">Contact</a>
-      </nav>
+
+      <!-- Invisible spacer to keep logo centred -->
+      <div class="header-spacer"></div>
     </header>
+
+    <!-- Side Menu Overlay -->
+    <div class="menu-overlay" onclick="toggleMenu()"></div>
+
+    <!-- Side Menu -->
+    <nav class="side-menu" id="sideMenu">
+      <button class="menu-close" onclick="toggleMenu()" aria-label="Close menu">✕</button>
+      <a href="index.html">Home</a>
+      <a href="assignment-brief.html">Assignment Brief Info</a>
+      <a href="assignment-calendar.html">Assignment Calendars</a>
+      <a href="mitigating-circumstances.html">Mitigating Circumstances</a>
+      <a href="contact.html">Contact</a>
+    </nav>
 
     <!-- Hero Section -->
     <main class="hero-section">
@@ -39,16 +56,12 @@
             After logging in, you can choose one of the specialist bots depending
             on what you need help with.
           </p>
-
           <ul>
             <li><strong>Assignment Brief Information</strong> – understand requirements, tasks, and submission expectations.</li>
             <li><strong>Assignment Calendars</strong> – check deadlines, upcoming dates, and schedules.</li>
             <li><strong>Mitigating Circumstances Advice</strong> – get guidance on eligibility, evidence, and application steps.</li>
           </ul>
-
-          <p>
-            Select a page from the navigation menu or log in to continue.
-          </p>
+          <p>Select a page from the navigation menu or log in to continue.</p>
         </div>
 
         <div class="quick-links">
@@ -56,12 +69,10 @@
             <h3>Assignment Brief Info</h3>
             <p>Find details about briefs, requirements, and submissions.</p>
           </a>
-
           <a href="assignment-calendar.html" class="quick-card">
             <h3>Assignment Calendars</h3>
             <p>View important dates, deadlines, and timelines.</p>
           </a>
-
           <a href="mitigating-circumstances.html" class="quick-card">
             <h3>Mitigating Circumstances</h3>
             <p>Read advice on applications, evidence, and support.</p>
@@ -74,29 +85,13 @@
         <div class="login-card">
           <h2>Login</h2>
           <p class="login-subtext">Sign in to access Metis services</p>
-
           <form action="login.php" method="post">
             <label for="email">Email address</label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              placeholder="Enter your email"
-              required
-            />
-
+            <input type="email" id="email" name="email" placeholder="Enter your email" required />
             <label for="password">Password</label>
-            <input
-              type="password"
-              id="password"
-              name="password"
-              placeholder="Enter your password"
-              required
-            />
-
+            <input type="password" id="password" name="password" placeholder="Enter your password" required />
             <button type="submit">Login</button>
           </form>
-
           <div class="login-links">
             <a href="forgot-password.html">Forgot password?</a>
             <a href="register.html">Create account</a>
@@ -110,5 +105,14 @@
       <p>&copy; 2026 Metis. All rights reserved.</p>
     </footer>
   </div>
+
+  <script>
+    function toggleMenu() {
+      const menu = document.getElementById('sideMenu');
+      const overlay = document.querySelector('.menu-overlay');
+      menu.classList.toggle('open');
+      overlay.classList.toggle('open');
+    }
+  </script>
 </body>
 </html>
