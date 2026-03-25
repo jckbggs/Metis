@@ -33,9 +33,17 @@ a {
 }
 
 .logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
   font-size: 28px;
   font-weight: 700;
   color: #3b82f6;
+}
+
+.logo img {
+  height: 210px;
+  width: auto;
 }
 
 .nav-links {
@@ -46,7 +54,7 @@ a {
 
 .nav-links a {
   color: #d0d0d0;
-  font-size: 15px;
+  font-size: 20px;
   transition: 0.2s;
 }
 
