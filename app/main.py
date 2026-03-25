@@ -1,4 +1,6 @@
 from fastapi import FastAPI
+from fastapi.responses import FileResponse
+from fastapi.staticfiles import StaticFiles
 import os
 import requests
 
@@ -7,10 +9,12 @@ app = FastAPI()
 MODEL_BACKEND = os.getenv("MODEL_BACKEND", "mock")
 OLLAMA_URL = os.getenv("OLLAMA_URL", "http://ollama:11434")
 
+app.mount("/static", StaticFiles(directory="/workspace/website"), name="static")
+
 
 @app.get("/")
-def root():
-    return {"status": "ok", "message": "Metis AI workspace is running"}
+def home():
+    return FileResponse("/workspace/website/index.html")
 
 
 @app.get("/chat")

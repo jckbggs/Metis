@@ -11,6 +11,7 @@ services:
       - ./app/.env
     volumes:
       - ./app:/workspace/app
+      - ./website:/workspace/website
       - metis_data:/workspace/data
     depends_on:
       - redis

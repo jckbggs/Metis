@@ -1,0 +1,288 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  background: #000000;
+  color: #f0f0f0;
+  min-height: 100vh;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.page-wrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header */
+.site-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 40px;
+  border-bottom: 1px solid #1a1a2e;
+  background: #050510;
+}
+
+.logo {
+  font-size: 28px;
+  font-weight: 700;
+  color: #3b82f6;
+}
+
+.nav-links {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.nav-links a {
+  color: #d0d0d0;
+  font-size: 15px;
+  transition: 0.2s;
+}
+
+.nav-links a:hover {
+  color: #3b82f6;
+}
+
+/* Main layout */
+.hero-section {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1.4fr 0.9fr;
+  gap: 40px;
+  padding: 50px 40px;
+  max-width: 1300px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.hero-left h1 {
+  font-size: 48px;
+  margin-bottom: 16px;
+  color: #ffffff;
+}
+
+.hero-text {
+  font-size: 18px;
+  color: #c0c0c0;
+  margin-bottom: 28px;
+  max-width: 700px;
+  line-height: 1.6;
+}
+
+/* Info box */
+.info-box {
+  background: #0a0a1a;
+  border: 1px solid #1a1a3e;
+  border-radius: 18px;
+  padding: 24px;
+  margin-bottom: 30px;
+}
+
+.info-box h2 {
+  margin-bottom: 14px;
+  color: #ffffff;
+}
+
+.info-box p {
+  color: #d0d0d0;
+  line-height: 1.7;
+  margin-bottom: 14px;
+}
+
+.info-box ul {
+  padding-left: 20px;
+  margin-bottom: 14px;
+}
+
+.info-box li {
+  margin-bottom: 10px;
+  color: #d0d0d0;
+  line-height: 1.6;
+}
+
+.info-box li strong {
+  color: #3b82f6;
+}
+
+/* Quick links */
+.quick-links {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+.quick-card {
+  background: #0a0a1a;
+  border: 1px solid #1a1a3e;
+  border-radius: 18px;
+  padding: 20px;
+  transition: 0.2s ease;
+}
+
+.quick-card:hover {
+  transform: translateY(-3px);
+  border-color: #3b82f6;
+  box-shadow: 0 4px 20px rgba(59, 130, 246, 0.15);
+}
+
+.quick-card h3 {
+  margin-bottom: 10px;
+  color: #ffffff;
+  font-size: 18px;
+}
+
+.quick-card p {
+  color: #c0c0c0;
+  line-height: 1.5;
+  font-size: 14px;
+}
+
+/* Login card */
+.hero-right {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.login-card {
+  width: 100%;
+  max-width: 420px;
+  background: #050510;
+  border: 1px solid #1a1a3e;
+  border-radius: 20px;
+  padding: 32px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+}
+
+.login-card h2 {
+  font-size: 30px;
+  margin-bottom: 8px;
+  color: #ffffff;
+}
+
+.login-subtext {
+  color: #a0a0a0;
+  margin-bottom: 24px;
+}
+
+.login-card form {
+  display: flex;
+  flex-direction: column;
+}
+
+.login-card label {
+  margin-bottom: 8px;
+  font-size: 14px;
+  color: #dcdcdc;
+}
+
+.login-card input {
+  margin-bottom: 18px;
+  padding: 14px 16px;
+  border-radius: 12px;
+  border: 1px solid #1a1a3e;
+  background: #0a0a1a;
+  color: #ffffff;
+  font-size: 15px;
+  outline: none;
+}
+
+.login-card input::placeholder {
+  color: #6a6a6a;
+}
+
+.login-card input:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+}
+
+.login-card button {
+  margin-top: 8px;
+  padding: 14px;
+  border: none;
+  border-radius: 12px;
+  background: #3b82f6;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.login-card button:hover {
+  background: #2563eb;
+}
+
+.login-links {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 18px;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.login-links a {
+  font-size: 14px;
+  color: #3b82f6;
+}
+
+.login-links a:hover {
+  text-decoration: underline;
+  color: #60a5fa;
+}
+
+/* Footer */
+.site-footer {
+  border-top: 1px solid #1a1a2e;
+  padding: 18px 40px;
+  text-align: center;
+  color: #8a8a8a;
+  background: #050510;
+}
+
+/* Responsive */
+@media (max-width: 950px) {
+  .hero-section {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-left h1 {
+    font-size: 38px;
+  }
+
+  .hero-right {
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 700px) {
+  .site-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 20px;
+  }
+
+  .hero-section {
+    padding: 30px 20px;
+  }
+
+  .site-footer {
+    padding: 18px 20px;
+  }
+
+  .hero-left h1 {
+    font-size: 32px;
+  }
+}
