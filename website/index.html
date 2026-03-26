@@ -4,47 +4,61 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Metis | Home</title>
+
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/static/styles.css" />
 </head>
+
 <body>
   <div class="page-wrapper">
 
+    <!-- Header -->
     <header class="site-header">
       <button class="hamburger" onclick="toggleMenu()" aria-label="Toggle menu">
         <span></span><span></span><span></span>
       </button>
+
       <div class="logo">
         <img src="/static/logo4.png" alt="Metis Logo" />
         <span>Metis</span>
       </div>
+
       <div class="header-spacer"></div>
     </header>
 
+    <!-- Overlay -->
     <div class="menu-overlay" onclick="toggleMenu()"></div>
 
+    <!-- Side Menu -->
     <nav class="side-menu" id="sideMenu">
       <button class="menu-close" onclick="toggleMenu()" aria-label="Close menu">✕</button>
-      <a href="index.html">Home</a>
-      <a href="login.html">Login</a>
+
+      <a href="/">Home</a>
+      <a href="/login">Login</a>
+
       <div class="side-menu-dropdown" id="botsDropdown">
         <span class="side-menu-dropdown-toggle" id="botsToggle">Bots &#9658;</span>
       </div>
-      <a href="your-calendar.html">Your Calendar</a>
-      <a href="faqs.html">FAQs</a>
-      <a href="about.html">About Us</a>
-      <a href="contact.html">Contact Us</a>
+
+      <a href="/your-calendar">Your Calendar</a>
+      <a href="/faqs">FAQs</a>
+      <a href="/about">About Us</a>
+      <a href="/contact">Contact Us</a>
     </nav>
 
+    <!-- Bots Submenu -->
     <div class="side-menu-dropdown-items" id="botsSubmenu">
-      <a href="assignment-brief.html">Assignment Brief Info</a>
-      <a href="mitigating-circumstances.html">Mitigating Circumstances</a>
-      <a href="assignment-calendar.html">Assignment Calendars Creator</a>
+      <a href="/assignment-brief">Assignment Brief Info</a>
+      <a href="/mitigating-circumstances">Mitigating Circumstances</a>
+      <a href="/assignment-calendar">Assignment Calendars Creator</a>
+      <a href="/assignment-reviewer">Assignment Reviewer</a>
     </div>
 
+    <!-- Main Content -->
     <main class="hero-section">
       <div class="hero-left">
         <h1>Welcome to Metis</h1>
+
         <p class="hero-text">
           Your student support chatbot for assignment brief information,
           assignment calendars, and mitigating circumstances advice.
@@ -57,28 +71,34 @@
             After logging in, you can choose one of the specialist bots depending
             on what you need help with.
           </p>
+
           <ul>
             <li><strong>Assignment Brief Information</strong> – understand requirements, tasks, and submission expectations.</li>
             <li><strong>Assignment Calendars</strong> – check deadlines, upcoming dates, and schedules.</li>
             <li><strong>Mitigating Circumstances Advice</strong> – get guidance on eligibility, evidence, and application steps.</li>
           </ul>
+
           <p>Select a page from the navigation menu or log in to continue.</p>
         </div>
 
+        <!-- Quick Links -->
         <div class="quick-links">
-          <a href="assignment-brief.html" class="quick-card">
+          <a href="/assignment-brief" class="quick-card">
             <h3>Assignment Brief Info</h3>
             <p>Find details about briefs, requirements, and submissions.</p>
           </a>
-          <a href="assignment-calendar.html" class="quick-card">
+
+          <a href="/assignment-calendar" class="quick-card">
             <h3>Assignment Calendars</h3>
             <p>View important dates, deadlines, and timelines.</p>
           </a>
-          <a href="mitigating-circumstances.html" class="quick-card">
+
+          <a href="/mitigating-circumstances" class="quick-card">
             <h3>Mitigating Circumstances</h3>
             <p>Read advice on applications, evidence, and support.</p>
           </a>
-          <a href="your-calendar.html" class="quick-card">
+
+          <a href="/your-calendar" class="quick-card">
             <h3>Your Calendar</h3>
             <p>View and manage your personal assignment calendar.</p>
           </a>
@@ -86,9 +106,11 @@
       </div>
     </main>
 
+    <!-- Footer -->
     <footer class="site-footer">
       <p>&copy; 2026 Metis. All rights reserved.</p>
     </footer>
+
   </div>
 
   <script src="/static/scripts.js"></script>

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Metis | Contact Us</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/styles.css" />
+</head>
+
+<body>
+  <div class="page-wrapper">
+
+    <!-- Header -->
+    <header class="site-header">
+      <button class="hamburger" onclick="toggleMenu()" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+
+      <div class="logo">
+        <img src="/static/logo4.png" alt="Metis Logo" />
+        <span>Metis</span>
+      </div>
+
+      <div class="header-spacer"></div>
+    </header>
+
+    <!-- Overlay -->
+    <div class="menu-overlay" onclick="toggleMenu()"></div>
+
+    <!-- Side Menu -->
+    <nav class="side-menu" id="sideMenu">
+      <button class="menu-close" onclick="toggleMenu()" aria-label="Close menu">✕</button>
+
+      <a href="/">Home</a>
+      <a href="/login">Login</a>
+
+      <div class="side-menu-dropdown" id="botsDropdown">
+        <span class="side-menu-dropdown-toggle" id="botsToggle">Bots &#9658;</span>
+      </div>
+
+      <a href="/your-calendar">Your Calendar</a>
+      <a href="/faqs">FAQs</a>
+      <a href="/about">About Us</a>
+      <a href="/contact">Contact Us</a>
+    </nav>
+
+    <!-- Bots Submenu -->
+    <div class="side-menu-dropdown-items" id="botsSubmenu">
+      <a href="/assignment-brief">Assignment Brief Info</a>
+      <a href="/mitigating-circumstances">Mitigating Circumstances</a>
+      <a href="/assignment-calendar">Assignment Calendars Creator</a>
+      <a href="/assignment-reviewer">Assignment Reviewer</a>
+    </div>
+
+    <!-- Main Content -->
+    <main class="hero-section">
+      <div class="hero-left">
+        <h1>Contact Us</h1>
+
+        <p class="hero-text">
+          If you need help, support, or have feedback about Metis, you can contact us using the form below.
+        </p>
+
+        <div class="info-box">
+          <h2>Get in Touch</h2>
+          <p>
+            Use this form to contact the Metis support team. You can ask questions about
+            assignment briefs, deadlines, mitigating circumstances, or technical issues.
+          </p>
+
+          <form class="contact-form">
+            <label for="name">Full Name</label>
+            <input type="text" id="name" name="name" placeholder="Enter your name" required>
+
+            <label for="email">Email Address</label>
+            <input type="email" id="email" name="email" placeholder="Enter your email" required>
+
+            <label for="subject">Subject</label>
+            <input type="text" id="subject" name="subject" placeholder="Enter subject" required>
+
+            <label for="message">Message</label>
+            <textarea id="message" name="message" rows="5" placeholder="Enter your message here..." required></textarea>
+
+            <button type="submit">Send Message</button>
+          </form>
+        </div>
+
+        <div class="info-box">
+          <h2>Other Ways to Contact Us</h2>
+          <p><strong>Email:</strong> support@metis.ac.uk</p>
+          <p><strong>Phone:</strong> +44 0000 000000</p>
+          <p><strong>Office Hours:</strong> Monday – Friday, 9:00am – 5:00pm</p>
+        </div>
+
+        <!-- Quick Links -->
+        <div class="quick-links">
+          <a href="/" class="quick-card">
+            <h3>Home</h3>
+            <p>Return to the homepage.</p>
+          </a>
+
+          <a href="/faqs" class="quick-card">
+            <h3>FAQs</h3>
+            <p>Find answers to common questions.</p>
+          </a>
+
+          <a href="/about" class="quick-card">
+            <h3>About Us</h3>
+            <p>Learn more about Metis.</p>
+          </a>
+
+          <a href="/login" class="quick-card">
+            <h3>Login</h3>
+            <p>Access your Metis account.</p>
+          </a>
+        </div>
+
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+      <p>&copy; 2026 Metis. All rights reserved.</p>
+    </footer>
+
+  </div>
+
+  <script src="/static/scripts.js"></script>
+</body>
+</html>

@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Metis | FAQs</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/styles.css" />
+</head>
+
+<body>
+  <div class="page-wrapper">
+
+    <header class="site-header">
+      <button class="hamburger" onclick="toggleMenu()" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+
+      <div class="logo">
+        <img src="/static/logo4.png" alt="Metis Logo" />
+        <span>Metis</span>
+      </div>
+
+      <div class="header-spacer"></div>
+    </header>
+
+    <div class="menu-overlay" onclick="toggleMenu()"></div>
+
+    <nav class="side-menu" id="sideMenu">
+      <button class="menu-close" onclick="toggleMenu()" aria-label="Close menu">✕</button>
+
+      <a href="/">Home</a>
+      <a href="/login">Login</a>
+
+      <div class="side-menu-dropdown" id="botsDropdown">
+        <span class="side-menu-dropdown-toggle" id="botsToggle">Bots &#9658;</span>
+      </div>
+
+      <a href="/your-calendar">Your Calendar</a>
+      <a href="/faqs">FAQs</a>
+      <a href="/about">About Us</a>
+      <a href="/contact">Contact Us</a>
+    </nav>
+
+    <div class="side-menu-dropdown-items" id="botsSubmenu">
+      <a href="/assignment-brief">Assignment Brief Info</a>
+      <a href="/mitigating-circumstances">Mitigating Circumstances</a>
+      <a href="/assignment-calendar">Assignment Calendars Creator</a>
+      <a href="/assignment-reviewer">Assignment Reviewer</a>
+    </div>
+
+    <main class="hero-section">
+      <div class="hero-left">
+        <h1>Frequently Asked Questions</h1>
+
+        <p class="hero-text">
+          Find answers to common questions about using Metis and accessing student support information.
+        </p>
+
+        <div class="info-box">
+          <h2>General Questions</h2>
+
+          <div class="faq-item">
+            <h3>What is Metis?</h3>
+            <p>
+              Metis is a student support platform that helps users access academic information,
+              including assignment brief guidance, assignment calendars, mitigating circumstances
+              advice, and assignment review support.
+            </p>
+          </div>
+
+          <div class="faq-item">
+            <h3>Do I need to log in to use Metis?</h3>
+            <p>
+              Some features may be available without logging in, but logging in allows you to
+              access personalised tools and services more easily.
+            </p>
+          </div>
+
+          <div class="faq-item">
+            <h3>Who is Metis for?</h3>
+            <p>
+              Metis is designed for students who need quick and clear access to academic support,
+              deadlines, and university guidance.
+            </p>
+          </div>
+        </div>
+
+        <div class="info-box">
+          <h2>Assignment Support</h2>
+
+          <div class="faq-item">
+            <h3>What can the Assignment Brief Information bot do?</h3>
+            <p>
+              It can help explain assignment requirements, clarify tasks, and point you toward
+              important details about expectations and submissions.
+            </p>
+          </div>
+
+          <div class="faq-item">
+            <h3>What does the Assignment Calendar tool do?</h3>
+            <p>
+              It helps you organise deadlines, track important academic dates, and plan your
+              assignment schedule more effectively.
+            </p>
+          </div>
+
+          <div class="faq-item">
+            <h3>Can Metis review my assignment?</h3>
+            <p>
+              Metis can provide support through the Assignment Reviewer tool, which is designed
+              to help you reflect on your work before submission.
+            </p>
+          </div>
+        </div>
+
+        <div class="info-box">
+          <h2>Mitigating Circumstances</h2>
+
+          <div class="faq-item">
+            <h3>What are mitigating circumstances?</h3>
+            <p>
+              Mitigating circumstances are serious, unexpected situations that may have affected
+              your ability to complete an assessment or meet a deadline.
+            </p>
+          </div>
+
+          <div class="faq-item">
+            <h3>Can Metis submit a mitigating circumstances claim for me?</h3>
+            <p>
+              No. Metis provides guidance and information, but you should follow your institution’s
+              official process to submit a claim.
+            </p>
+          </div>
+
+          <div class="faq-item">
+            <h3>What kind of evidence might be needed?</h3>
+            <p>
+              Evidence depends on the situation and your institution’s rules. Metis can provide
+              general guidance, but you should always check your official university policy.
+            </p>
+          </div>
+        </div>
+
+        <div class="info-box">
+          <h2>Technical Support</h2>
+
+          <div class="faq-item">
+            <h3>What should I do if a page is not loading?</h3>
+            <p>
+              Try refreshing the page first. If the issue continues, contact the support team
+              using the Contact Us page.
+            </p>
+          </div>
+
+          <div class="faq-item">
+            <h3>What should I do if I cannot log in?</h3>
+            <p>
+              Double-check your email and password. If you still cannot access your account,
+              use the Contact Us page for further help.
+            </p>
+          </div>
+        </div>
+
+        <div class="quick-links">
+          <a href="/" class="quick-card">
+            <h3>Home</h3>
+            <p>Return to the Metis homepage.</p>
+          </a>
+
+          <a href="/contact" class="quick-card">
+            <h3>Contact Us</h3>
+            <p>Get help with questions or technical issues.</p>
+          </a>
+
+          <a href="/about" class="quick-card">
+            <h3>About Us</h3>
+            <p>Learn more about the purpose of Metis.</p>
+          </a>
+
+          <a href="/login" class="quick-card">
+            <h3>Login</h3>
+            <p>Access your Metis account and tools.</p>
+          </a>
+        </div>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <p>&copy; 2026 Metis. All rights reserved.</p>
+    </footer>
+  </div>
+
+  <script src="/static/scripts.js"></script>
+</body>
+</html>

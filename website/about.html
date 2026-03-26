@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Metis | About Us</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/styles.css" />
+</head>
+
+<body>
+  <div class="page-wrapper">
+
+    <!-- Header -->
+    <header class="site-header">
+      <button class="hamburger" onclick="toggleMenu()" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+
+      <div class="logo">
+        <img src="/static/logo4.png" alt="Metis Logo" />
+        <span>Metis</span>
+      </div>
+
+      <div class="header-spacer"></div>
+    </header>
+
+    <!-- Overlay -->
+    <div class="menu-overlay" onclick="toggleMenu()"></div>
+
+    <!-- Side Menu -->
+    <nav class="side-menu" id="sideMenu">
+      <button class="menu-close" onclick="toggleMenu()" aria-label="Close menu">✕</button>
+
+      <a href="/">Home</a>
+      <a href="/login">Login</a>
+
+      <div class="side-menu-dropdown" id="botsDropdown">
+        <span class="side-menu-dropdown-toggle" id="botsToggle">Bots &#9658;</span>
+      </div>
+
+      <a href="/your-calendar">Your Calendar</a>
+      <a href="/faqs">FAQs</a>
+      <a href="/about">About Us</a>
+      <a href="/contact">Contact Us</a>
+    </nav>
+
+    <!-- Bots Submenu -->
+    <div class="side-menu-dropdown-items" id="botsSubmenu">
+      <a href="/assignment-brief">Assignment Brief Info</a>
+      <a href="/mitigating-circumstances">Mitigating Circumstances</a>
+      <a href="/assignment-calendar">Assignment Calendars Creator</a>
+      <a href="/assignment-reviewer">Assignment Reviewer</a>
+    </div>
+
+    <!-- Main Content -->
+    <main class="hero-section">
+      <div class="hero-left">
+        <h1>About Metis</h1>
+
+        <p class="hero-text">
+          Metis is a student support platform designed to help students easily access
+          important academic information, guidance, and planning tools in one place.
+        </p>
+
+        <div class="info-box">
+          <h2>Our Purpose</h2>
+          <p>
+            Metis was created to simplify access to academic support. Many students struggle
+            to find clear information about assignment briefs, deadlines, and mitigating
+            circumstances. Metis brings this information together into one easy-to-use system.
+          </p>
+          <p>
+            Our goal is to reduce confusion, save time, and help students feel more confident
+            when managing their assignments and academic responsibilities.
+          </p>
+        </div>
+
+        <div class="info-box">
+          <h2>What Metis Helps With</h2>
+          <ul>
+            <li><strong>Assignment Brief Information</strong> – explains assignment requirements and expectations.</li>
+            <li><strong>Assignment Calendars</strong> – helps track deadlines and plan your time.</li>
+            <li><strong>Mitigating Circumstances Advice</strong> – explains the process and what evidence you may need.</li>
+            <li><strong>Assignment Review Support</strong> – helps you review your work before submission.</li>
+          </ul>
+        </div>
+
+        <div class="info-box">
+          <h2>Our Mission</h2>
+          <p>
+            Our mission is to make academic support more accessible, clearer, and easier to use.
+            Metis is designed to guide students to the right information quickly, without needing
+            to search through multiple websites or documents.
+          </p>
+        </div>
+
+        <!-- Quick Navigation -->
+        <div class="quick-links">
+          <a href="/" class="quick-card">
+            <h3>Home</h3>
+            <p>Return to the Metis homepage.</p>
+          </a>
+
+          <a href="/login" class="quick-card">
+            <h3>Login</h3>
+            <p>Access your Metis account.</p>
+          </a>
+
+          <a href="/faqs" class="quick-card">
+            <h3>FAQs</h3>
+            <p>Read frequently asked questions.</p>
+          </a>
+
+          <a href="/contact" class="quick-card">
+            <h3>Contact</h3>
+            <p>Get in touch for support.</p>
+          </a>
+        </div>
+
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+      <p>&copy; 2026 Metis. All rights reserved.</p>
+    </footer>
+
+  </div>
+
+  <script src="/static/scripts.js"></script>
+</body>
+</html>
