@@ -3,44 +3,45 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Metis | Login</title>
+  <title>Metis | Home</title>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/static/styles.css" />
 </head>
 <body>
   <div class="page-wrapper">
 
-    <!-- Header -->
     <header class="site-header">
       <button class="hamburger" onclick="toggleMenu()" aria-label="Toggle menu">
-        <span></span>
-        <span></span>
-        <span></span>
+        <span></span><span></span><span></span>
       </button>
-
       <div class="logo">
         <img src="/static/logo4.png" alt="Metis Logo" />
-        <span>METIS</span>
+        <span>Metis</span>
       </div>
-
-      <!-- Invisible spacer to keep logo centred -->
       <div class="header-spacer"></div>
     </header>
 
-    <!-- Side Menu Overlay -->
     <div class="menu-overlay" onclick="toggleMenu()"></div>
 
-    <!-- Side Menu -->
     <nav class="side-menu" id="sideMenu">
       <button class="menu-close" onclick="toggleMenu()" aria-label="Close menu">✕</button>
       <a href="index.html">Home</a>
-      <a href="assignment-brief.html">Assignment Brief Info</a>
-      <a href="assignment-calendar.html">Assignment Calendars</a>
-      <a href="mitigating-circumstances.html">Mitigating Circumstances</a>
-      <a href="contact.html">Contact</a>
+      <a href="login.html">Login</a>
+      <div class="side-menu-dropdown" id="botsDropdown">
+        <span class="side-menu-dropdown-toggle" id="botsToggle">Bots &#9658;</span>
+      </div>
+      <a href="your-calendar.html">Your Calendar</a>
+      <a href="faqs.html">FAQs</a>
+      <a href="about.html">About Us</a>
+      <a href="contact.html">Contact Us</a>
     </nav>
 
-    <!-- Hero Section -->
+    <div class="side-menu-dropdown-items" id="botsSubmenu">
+      <a href="assignment-brief.html">Assignment Brief Info</a>
+      <a href="mitigating-circumstances.html">Mitigating Circumstances</a>
+      <a href="assignment-calendar.html">Assignment Calendars Creator</a>
+    </div>
+
     <main class="hero-section">
       <div class="hero-left">
         <h1>Welcome to Metis</h1>
@@ -77,42 +78,19 @@
             <h3>Mitigating Circumstances</h3>
             <p>Read advice on applications, evidence, and support.</p>
           </a>
-        </div>
-      </div>
-
-      <!-- Login Box -->
-      <div class="hero-right">
-        <div class="login-card">
-          <h2>Login</h2>
-          <p class="login-subtext">Sign in to access Metis services</p>
-          <form action="login.php" method="post">
-            <label for="email">Email address</label>
-            <input type="email" id="email" name="email" placeholder="Enter your email" required />
-            <label for="password">Password</label>
-            <input type="password" id="password" name="password" placeholder="Enter your password" required />
-            <button type="submit">Login</button>
-          </form>
-          <div class="login-links">
-            <a href="forgot-password.html">Forgot password?</a>
-            <a href="register.html">Create account</a>
-          </div>
+          <a href="your-calendar.html" class="quick-card">
+            <h3>Your Calendar</h3>
+            <p>View and manage your personal assignment calendar.</p>
+          </a>
         </div>
       </div>
     </main>
 
-    <!-- Footer -->
     <footer class="site-footer">
       <p>&copy; 2026 Metis. All rights reserved.</p>
     </footer>
   </div>
 
-  <script>
-    function toggleMenu() {
-      const menu = document.getElementById('sideMenu');
-      const overlay = document.querySelector('.menu-overlay');
-      menu.classList.toggle('open');
-      overlay.classList.toggle('open');
-    }
-  </script>
+  <script src="/static/scripts.js"></script>
 </body>
 </html>
