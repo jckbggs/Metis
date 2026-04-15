@@ -1,3 +1,5 @@
+version: '3.9'
+
 services:
   metis:
     build:
@@ -15,6 +17,7 @@ services:
       - metis_data:/workspace/data
     depends_on:
       - redis
+      - db  
     restart: unless-stopped
 
   redis:
@@ -36,7 +39,22 @@ services:
     profiles: ["local-llm"]
     restart: unless-stopped
 
+  db:  
+    image: postgres:16
+    container_name: postgres-db
+    restart: always
+    environment:
+      POSTGRES_USER: myuser
+      POSTGRES_PASSWORD: mypassword
+      POSTGRES_DB: mydb
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./db/schema.sql:/docker-entrypoint-initdb.d/schema.sql
+      - postgres_data:/var/lib/postgresql/data  
+
 volumes:
   metis_data:
   redis_data:
   ollama_data:
+  postgres_data:  
