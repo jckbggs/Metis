@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Request, Form
 from fastapi.responses import RedirectResponse
-from app.database import create_user, get_user, verify_password
+from app.controllers.auth_controllers import create_user, get_user, verify_password
 
 router = APIRouter(prefix="/api", tags=["auth"])
 
