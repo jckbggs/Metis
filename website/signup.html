@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Metis | Login</title>
+  <title>Metis | Sign Up</title>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/static/styles.css" />
   <style>
@@ -84,6 +84,11 @@
       border-color: #3b82f6;
     }
 
+    .form-group .hint {
+      font-size: 11px;
+      color: #606080;
+    }
+
     .auth-btn {
       width: 100%;
       padding: 13px;
@@ -124,7 +129,7 @@
 <body>
   <div class="page-wrapper">
 
-
+    <!-- Header -->
     <header class="site-header">
       <button class="hamburger" onclick="toggleMenu()" aria-label="Toggle menu">
         <span></span><span></span><span></span>
@@ -136,10 +141,8 @@
       <div class="header-spacer"></div>
     </header>
 
-    <!-- Overlay -->
     <div class="menu-overlay" onclick="toggleMenu()"></div>
 
-    <!-- Side Menu -->
     <nav class="side-menu" id="sideMenu">
       <button class="menu-close" onclick="toggleMenu()" aria-label="Close menu">&#10005;</button>
       <a href="/">Home</a>
@@ -153,7 +156,6 @@
       <a href="/contact">Contact Us</a>
     </nav>
 
-    <!-- Bots Submenu -->
     <div class="side-menu-dropdown-items" id="botsSubmenu">
       <a href="/assignment-brief">Assignment Brief Info</a>
       <a href="/mitigating-circumstances">Mitigating Circumstances</a>
@@ -163,32 +165,43 @@
 
     <div class="auth-wrapper">
       <div class="auth-card">
-        <h2>Login</h2>
-        <p class="subtitle">Sign in to your Metis account</p>
+        <h2>Sign Up</h2>
+        <p class="subtitle">Create your Metis account</p>
 
         <div class="auth-error" id="errorBox"></div>
 
-        <form method="POST" action="/api/login">
+        <form method="POST" action="/api/signup" id="signupForm">
           <div class="form-group">
             <label for="username">Username</label>
-            <input type="text" id="username" name="username" required autocomplete="username" />
+            <input type="text" id="username" name="username" required maxlength="50" autocomplete="username" />
+            <span class="hint">Max 50 characters</span>
+          </div>
+
+          <div class="form-group">
+            <label for="dob">Date of Birth</label>
+            <input type="date" id="dob" name="dob" required />
           </div>
 
           <div class="form-group">
             <label for="password">Password</label>
-            <input type="password" id="password" name="password" required autocomplete="current-password" />
+            <input type="password" id="password" name="password" required autocomplete="new-password" />
+            <span class="hint">Minimum 6 characters</span>
           </div>
 
-          <button type="submit" class="auth-btn">Login</button>
+          <div class="form-group">
+            <label for="confirm_password">Confirm Password</label>
+            <input type="password" id="confirm_password" name="confirm_password" required autocomplete="new-password" />
+          </div>
+
+          <button type="submit" class="auth-btn">Create Account</button>
         </form>
 
         <p class="auth-footer">
-          Don't have an account? <a href="/signup">Sign up</a>
+          Already have an account? <a href="/login">Login</a>
         </p>
       </div>
     </div>
 
-    <!-- Footer -->
     <footer class="site-footer">
       <p>&copy; 2026 Metis. All rights reserved.</p>
     </footer>
@@ -198,8 +211,12 @@
   <script src="/static/scripts.js"></script>
   <script>
     const errors = {
-      invalid_credentials: "Incorrect username or password.",
-      missing_fields: "Please fill in all fields.",
+      missing_fields: "Please fill in all required fields.",
+      username_too_long: "Username must be 50 characters or fewer.",
+      password_mismatch: "Passwords do not match.",
+      password_too_short: "Password must be at least 6 characters.",
+      username_taken: "That username is already taken. Please choose another.",
+      db_error: "A database error occurred. Please try again.",
     };
 
     const params = new URLSearchParams(window.location.search);
@@ -209,6 +226,17 @@
       box.textContent = errors[err] || "An error occurred. Please try again.";
       box.classList.add("visible");
     }
+
+    document.getElementById("signupForm").addEventListener("submit", function (e) {
+      const pw = document.getElementById("password").value;
+      const cpw = document.getElementById("confirm_password").value;
+      if (pw !== cpw) {
+        e.preventDefault();
+        const box = document.getElementById("errorBox");
+        box.textContent = errors.password_mismatch;
+        box.classList.add("visible");
+      }
+    });
   </script>
 </body>
 

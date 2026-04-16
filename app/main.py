@@ -1,55 +1,64 @@
+import os
 from fastapi import FastAPI
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
-import os
+from starlette.middleware.sessions import SessionMiddleware
+from app.routers import auth
 
 app = FastAPI()
 
+SESSION_SECRET = os.getenv("SESSION_SECRET", "change-this-secret-in-production")
+app.add_middleware(SessionMiddleware, secret_key=SESSION_SECRET)
+
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 PROJECT_ROOT = os.path.dirname(BASE_DIR)
-
 website_dir = os.path.join(PROJECT_ROOT, "website")
 
-print("BASE_DIR:", BASE_DIR)
-print("PROJECT_ROOT:", PROJECT_ROOT)
-print("WEBSITE_DIR:", website_dir)
-print("WEBSITE EXISTS:", os.path.exists(website_dir))
-
 app.mount("/static", StaticFiles(directory=website_dir), name="static")
+
+app.include_router(auth.router)
+
+
+def page(filename: str) -> FileResponse:
+    return FileResponse(os.path.join(website_dir, filename))
 
 
 @app.get("/")
 def home():
-    return FileResponse(os.path.join(website_dir, "index.html"))
+    return page("index.html")
 
 @app.get("/about")
 def about():
-    return FileResponse(os.path.join(website_dir, "about.html"))
+    return page("about.html")
 
 @app.get("/faqs")
 def faqs():
-    return FileResponse(os.path.join(website_dir, "faqs.html"))
+    return page("faqs.html")
 
 @app.get("/contact")
 def contact():
-    return FileResponse(os.path.join(website_dir, "contact_us.html"))
+    return page("contact_us.html")
 
 @app.get("/login")
-def login():
-    return FileResponse(os.path.join(website_dir, "login.html"))
+def login_page():
+    return page("login.html")
+
+@app.get("/signup")
+def signup_page():
+    return page("signup.html")
 
 @app.get("/assignment-brief")
 def assignment_brief():
-    return FileResponse(os.path.join(website_dir, "assignment-brief.html"))
+    return page("assignment-brief.html")
 
 @app.get("/mitigating-circumstances")
 def mitigating():
-    return FileResponse(os.path.join(website_dir, "mitigating-circumstances.html"))
+    return page("mitigating-circumstances.html")
 
 @app.get("/assignment-reviewer")
 def reviewer():
-    return FileResponse(os.path.join(website_dir, "assignement_reviewer.html"))
+    return page("assignement_reviewer.html")
 
 @app.get("/your-calendar")
 def calendar():
-    return FileResponse(os.path.join(website_dir, "your_calendar.html"))
+    return page("your_calendar.html")
