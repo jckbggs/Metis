@@ -1,0 +1,8 @@
+pip install -U openai python-dotenv "psycopg[binary]" langchain langchain-openai langgraph           
+pip install -U langchain-community langchain-chroma langchain-text-splitters pypdf
+
+--- These are for loading the .env file
+--- For connecting Python to PostgreSQL
+---  For the router/multi agent part
+--- For chroma
+--- Things like pypdf is optional for loading pdf files for the RAG system
