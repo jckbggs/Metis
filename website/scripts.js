@@ -44,13 +44,43 @@ fetch("/api/me", { credentials: "same-origin" })
     const loginLink = document.querySelector('.side-menu a[href="/login"]');
     if (!loginLink) return;
 
-    if (data.logged_in) {
-      const userBlock = document.createElement("div");
-      userBlock.className = "side-menu-user";
-      userBlock.innerHTML =
-        '<span class="side-menu-username">' + data.username + '</span>' +
-        '<a href="/api/logout" class="side-menu-logout">Logout</a>';
+if (data.logged_in) {
+  const userBlock = document.createElement("div");
+  userBlock.className = "side-menu-user";
+    userBlock.innerHTML =
+    '<span class="side-menu-username">' + data.username + '</span>' +
+    '<a href="/api/logout" class="side-menu-logout">Logout</a>';
       loginLink.replaceWith(userBlock);
     }
   })
   .catch(function () {});
+
+const errors = {
+      missing_fields: "Please fill in all required fields.",
+      username_too_long: "Username must be 50 characters or fewer.",
+      password_mismatch: "Passwords do not match.",
+      password_too_short: "Password must be at least 6 characters.",
+      username_taken: "That username is already taken. Please choose another.",
+      db_error: "A database error occurred. Please try again.",
+    };
+
+const params = new URLSearchParams(window.location.search);
+const err = params.get("error");
+  if (err) {
+    const box = document.getElementById("errorBox");
+    box.textContent = errors[err] || "An error occurred. Please try again.";
+    box.classList.add("visible");
+    }
+
+document.getElementById("signupForm").addEventListener("submit", function (e) {
+  const pw = document.getElementById("password").value;
+  const cpw = document.getElementById("confirm_password").value;
+    if (pw !== cpw) {
+      e.preventDefault();
+      const box = document.getElementById("errorBox");
+      box.textContent = errors.password_mismatch;
+      box.classList.add("visible");
+      }
+    });
+
+
