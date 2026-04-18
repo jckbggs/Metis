@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Metis | Mitigating Circumstances</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/styles.css?v=6" />
+
+  <style>
+    .chat-wrapper {
+      background: #0a0a1a;
+      border: 1px solid #1f2a5a;
+      border-radius: 18px;
+      padding: 24px;
+      width: 100%;
+      max-width: 900px;
+      margin: 0 auto;
+      box-sizing: border-box;
+    }
+
+    .chat-box {
+      background: #050510;
+      border: 1px solid #1a1a2e;
+      border-radius: 14px;
+      padding: 18px;
+      min-height: 360px;
+      overflow-y: auto;
+      margin-bottom: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .chat-message {
+      max-width: 80%;
+      padding: 14px 16px;
+      border-radius: 14px;
+      line-height: 1.6;
+      font-size: 15px;
+      word-wrap: break-word;
+    }
+
+    .chat-message.bot {
+      align-self: flex-start;
+      background: #0f1022;
+      border: 1px solid #1a1a3e;
+      color: #d0d0d0;
+    }
+
+    .chat-message.user {
+      align-self: flex-end;
+      background: rgba(59, 130, 246, 0.15);
+      border: 1px solid rgba(59, 130, 246, 0.35);
+      color: #ffffff;
+    }
+
+    .chat-input-row {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .chat-input {
+      flex: 1;
+      padding: 14px 16px;
+      border-radius: 12px;
+      border: 1px solid #1a1a3e;
+      background: #050510;
+      color: #ffffff;
+      font-family: 'Cinzel', serif;
+      font-size: 15px;
+    }
+
+    .chat-input::placeholder {
+      color: #7d8296;
+    }
+
+    .chat-input:focus {
+      outline: none;
+      border-color: #3b82f6;
+    }
+
+    .chat-send-btn {
+      padding: 14px 22px;
+      border: none;
+      border-radius: 12px;
+      background: #3b82f6;
+      color: #ffffff;
+      font-family: 'Cinzel', serif;
+      font-size: 15px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .chat-send-btn:hover {
+      background: #2563eb;
+    }
+
+    @media (max-width: 700px) {
+      .chat-input-row {
+        flex-direction: column;
+      }
+
+      .chat-message {
+        max-width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="page-wrapper">
+
+    <header class="site-header">
+      <button class="hamburger" onclick="toggleMenu()" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+
+      <div class="logo">
+        <img src="/static/logo4.png" alt="Metis Logo" />
+        <span>Metis</span>
+      </div>
+
+      <div class="header-spacer"></div>
+    </header>
+
+    <div class="menu-overlay" onclick="toggleMenu()"></div>
+
+    <nav class="side-menu" id="sideMenu">
+      <button class="menu-close" onclick="toggleMenu()" aria-label="Close menu">✕</button>
+
+      <a href="/">Home</a>
+      <a href="/login">Login</a>
+
+      <div class="side-menu-dropdown" id="botsDropdown">
+        <button type="button" class="side-menu-dropdown-toggle" id="botsToggle">Bots &#9658;</button>
+      </div>
+
+      <a href="/your-calendar">Your Calendar</a>
+      <a href="/faqs">FAQs</a>
+      <a href="/about">About Us</a>
+      <a href="/contact">Contact Us</a>
+    </nav>
+
+    <div class="side-menu-dropdown-items" id="botsSubmenu">
+      <a href="/assignment-brief">Assignment Brief Info</a>
+      <a href="/mitigating-circumstances">Mitigating Circumstances</a>
+      <a href="/assignment-calendar">Assignment Calendars Creator</a>
+      <a href="/assignment-reviewer">Assignment Reviewer</a>
+    </div>
+
+    <main class="hero-section">
+      <div class="hero-left">
+        <h1>Mitigating Circumstances</h1>
+
+        <p class="hero-text">
+          Ask about self-certification, evidence, and whether you may be able to apply for extra time.
+        </p>
+
+        <div class="chat-wrapper">
+          <div id="chatBox" class="chat-box">
+            <div class="chat-message bot">
+              Hi. I can help with mitigating circumstances and extension guidance.
+            </div>
+          </div>
+
+          <div class="chat-input-row">
+            <input
+              id="userInput"
+              class="chat-input"
+              type="text"
+              placeholder="Type your message here..."
+            />
+            <button id="sendBtn" class="chat-send-btn" type="button">
+              Send
+            </button>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <p>&copy; 2026 Metis. All rights reserved.</p>
+    </footer>
+
+  </div>
+
+  <script src="/static/scripts.js?v=6"></script>
+</body>
+</html>
