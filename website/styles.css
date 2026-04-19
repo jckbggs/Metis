@@ -562,3 +562,29 @@ a {
     .auth-footer a:hover {
       color: #60a5fa;
     }
+    .side-menu-user {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid #1a1a2e;
+}
+
+.side-menu-username {
+  color: #d0d0d0;
+  font-size: 16px;
+  font-family: 'Cinzel', serif;
+}
+
+.side-menu-logout {
+  color: #3b82f6;
+  font-size: 14px;
+  font-family: 'Cinzel', serif;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.side-menu-logout:hover {
+  color: #60a5fa;
+}
