@@ -45,13 +45,25 @@ fetch("/api/me", { credentials: "same-origin" })
     if (!loginLink) return;
 
 if (data.logged_in) {
+  loginLink.style.display = 'none';
+  const firstLetter = data.username.charAt(0).toUpperCase();
   const userBlock = document.createElement("div");
   userBlock.className = "side-menu-user";
-    userBlock.innerHTML =
-    '<span class="side-menu-username">' + data.username + '</span>' +
-    '<a href="/api/logout" class="side-menu-logout">Logout</a>';
-      loginLink.replaceWith(userBlock);
-    }
+  userBlock.innerHTML =
+    '<div class="side-menu-profile">' +
+      '<div class="side-menu-avatar">' + firstLetter + '</div>' +
+      '<span class="side-menu-username">' + data.username + '</span>' +
+    '</div>' +
+    '<a href="/api/logout" class="side-menu-logout" title="Logout">' +
+      '<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' +
+        '<path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>' +
+        '<polyline points="16 17 21 12 16 7"/>' +
+        '<line x1="21" y1="12" x2="9" y2="12"/>' +
+      '</svg>' +
+    '</a>';
+  const sideMenu = document.getElementById('sideMenu');
+  if (sideMenu) sideMenu.appendChild(userBlock);
+}
   })
   .catch(function () {});
 
