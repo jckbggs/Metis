@@ -82,5 +82,66 @@ document.getElementById("signupForm").addEventListener("submit", function (e) {
       box.classList.add("visible");
       }
     });
+  
+  document.addEventListener("DOMContentLoaded", function () {
+  const chatBox = document.getElementById("chatBox");
+  const userInput = document.getElementById("userInput");
+  const sendBtn = document.getElementById("sendBtn");
+
+  function addMessage(text, sender) {
+    if (!chatBox) return;
+
+    const div = document.createElement("div");
+    div.className = `chat-message ${sender}`;
+    div.textContent = text;
+    chatBox.appendChild(div);
+    chatBox.scrollTop = chatBox.scrollHeight;
+  }
+
+  async function sendMessage() {
+    if (!userInput || !sendBtn) return;
+
+    const message = userInput.value.trim();
+    if (!message) return;
+
+    addMessage(message, "user");
+    userInput.value = "";
+    sendBtn.disabled = true;
+
+    try {
+      const response = await fetch("/chat", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ message })
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}`);
+      }
+
+      const data = await response.json();
+      addMessage(data.reply, "bot");
+    } catch (error) {
+      console.error("Chat error:", error);
+      addMessage("Sorry, something went wrong.", "bot");
+    } finally {
+      sendBtn.disabled = false;
+    }
+  }
+
+  if (sendBtn) {
+    sendBtn.addEventListener("click", sendMessage);
+  }
+
+  if (userInput) {
+    userInput.addEventListener("keypress", function (event) {
+      if (event.key === "Enter") {
+        sendMessage();
+      }
+    });
+  }
+});
 
 
