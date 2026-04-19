@@ -149,22 +149,30 @@ a {
 
 .side-menu-dropdown-toggle {
   display: block;
+  width: 100%;
   padding: 12px 0;
+  border: none;
   border-bottom: 1px solid #1a1a2e;
+  background: none;
+  box-shadow: none;
+  outline: none;
   color: #d0d0d0;
   font-size: 16px;
   font-family: 'Cinzel', serif;
   font-weight: inherit;
   letter-spacing: inherit;
   text-transform: inherit;
+  text-align: left;
+  cursor: pointer;
   user-select: none;
-  transition: color 0.2s;
-  box-sizing: border-box;
-  width: 100%;
+  appearance: none;
+  -webkit-appearance: none;
+  border-radius: 0;
 }
 
 .side-menu-dropdown-toggle:hover {
   color: #3b82f6;
+  background: none;
 }
 
 /* ── Bots flyout panel ── */
