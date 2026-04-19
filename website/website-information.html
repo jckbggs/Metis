@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Metis | Mitigating Circumstances</title>
+  <title>Metis | Website Information</title>
 
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/static/styles.css?v=6" />
+  <link rel="stylesheet" href="/static/styles.css?v=20" />
 
   <style>
     .chat-wrapper {
@@ -98,6 +98,13 @@
       background: #2563eb;
     }
 
+    .chat-limit {
+      margin-top: 12px;
+      color: #8a8a8a;
+      font-size: 14px;
+      text-align: center;
+    }
+
     @media (max-width: 700px) {
       .chat-input-row {
         flex-direction: column;
@@ -113,6 +120,7 @@
 <body>
   <div class="page-wrapper">
 
+    <!-- Header -->
     <header class="site-header">
       <button class="hamburger" onclick="toggleMenu()" aria-label="Toggle menu">
         <span></span><span></span><span></span>
@@ -126,8 +134,10 @@
       <div class="header-spacer"></div>
     </header>
 
+    <!-- Overlay -->
     <div class="menu-overlay" onclick="toggleMenu()"></div>
 
+    <!-- Side Menu -->
     <nav class="side-menu" id="sideMenu">
       <button class="menu-close" onclick="toggleMenu()" aria-label="Close menu">✕</button>
 
@@ -135,7 +145,7 @@
       <a href="/login">Login</a>
 
       <div class="side-menu-dropdown" id="botsDropdown">
-        <button type="button" class="side-menu-dropdown-toggle" id="botsToggle">Bots &#9658;</button>
+        <span class="side-menu-dropdown-toggle" id="botsToggle">Bots &#9658;</span>
       </div>
 
       <a href="/your-calendar">Your Calendar</a>
@@ -144,6 +154,7 @@
       <a href="/contact">Contact Us</a>
     </nav>
 
+    <!-- Bots Submenu -->
     <div class="side-menu-dropdown-items" id="botsSubmenu">
       <a href="/assignment-brief">Assignment Brief Info</a>
       <a href="/mitigating-circumstances">Mitigating Circumstances</a>
@@ -152,18 +163,19 @@
       <a href="/website-information">Website Information</a>
     </div>
 
+    <!-- Main Content -->
     <main class="hero-section">
       <div class="hero-left">
-        <h1>Mitigating Circumstances</h1>
+        <h1 id="chatTitle">Website Information</h1>
 
-        <p class="hero-text">
-          Ask about self-certification, evidence, and whether you may be able to apply for extra time.
+        <p id="chatSubtitle" class="hero-text">
+          Ask about the Metis website and available support.
         </p>
 
-        <div class="chat-wrapper">
+        <div class="chat-wrapper" data-chat-endpoint="/chat/website-info">
           <div id="chatBox" class="chat-box">
-            <div class="chat-message bot">
-              Hi. I can help with mitigating circumstances and extension guidance.
+            <div id="initialBotMessage" class="chat-message bot">
+              Hi. I can explain what the website does and what each page is for.
             </div>
           </div>
 
@@ -172,22 +184,25 @@
               id="userInput"
               class="chat-input"
               type="text"
-              placeholder="Type your message here..."
+              placeholder="Ask about the website..."
             />
             <button id="sendBtn" class="chat-send-btn" type="button">
               Send
             </button>
           </div>
+
+          <div id="remainingBox" class="chat-limit"></div>
         </div>
       </div>
     </main>
 
+    <!-- Footer -->
     <footer class="site-footer">
       <p>&copy; 2026 Metis. All rights reserved.</p>
     </footer>
 
   </div>
 
-  <script src="/static/scripts.js?v=6"></script>
+  <script src="/static/website-information.js?v=20"></script>
 </body>
 </html>

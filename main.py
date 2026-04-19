@@ -6,6 +6,7 @@ from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
 from chatbot.mitigating_circumstances import MitigatingAgent
+from chatbot.website_info_bot import WebsiteInfoBot
 
 app = FastAPI()
 
@@ -13,6 +14,7 @@ BASE_DIR = Path(__file__).resolve().parent
 WEBSITE_DIR = BASE_DIR / "website"
 
 mitigating_bot = MitigatingAgent()
+website_info_bot = WebsiteInfoBot()
 
 
 class ChatRequest(BaseModel):
@@ -33,6 +35,12 @@ def chat(req: ChatRequest):
     return {"reply": reply}
 
 
+@app.post("/chat/website-info")
+def website_info_chat(req: ChatRequest):
+    reply = website_info_bot.reply(req.message, username=None, logged_in=False)
+    return {"reply": reply, "remaining": None, "logged_in": False, "username": None}
+
+
 @app.get("/")
 def home():
     return FileResponse(WEBSITE_DIR / "index.html")
@@ -41,6 +49,11 @@ def home():
 @app.get("/mitigating-circumstances")
 def mitigating_page():
     return FileResponse(WEBSITE_DIR / "mitigating-circumstances.html")
+
+
+@app.get("/website-information")
+def website_information_page():
+    return FileResponse(WEBSITE_DIR / "website-information.html")
 
 
 @app.get("/contact")
