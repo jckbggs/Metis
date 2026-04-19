@@ -1,11 +1,14 @@
 import os
+from pathlib import Path
+
+from dotenv import load_dotenv
 import psycopg
 from psycopg.rows import dict_row
-from dotenv import load_dotenv
 
-load_dotenv()
+load_dotenv(Path(__file__).resolve().parent.parent / "chatbot" / ".env")
+
+POSTGRES_DSN = os.getenv("POSTGRES_DSN")
+
 
 def get_connection():
-    dsn = os.getenv("POSTGRES_DSN")
-    if not dsn:
-        raise ValueError("POSTGRES_DSN is missing in .env")
+    return psycopg.connect(POSTGRES_DSN, row_factory=dict_row)
