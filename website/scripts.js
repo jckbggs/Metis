@@ -7,8 +7,8 @@ function toggleMenu() {
 }
 
 const botsDropdown = document.getElementById("botsDropdown");
-const botsToggle   = document.getElementById("botsToggle");
-const botsSubmenu  = document.getElementById("botsSubmenu");
+const botsToggle = document.getElementById("botsToggle");
+const botsSubmenu = document.getElementById("botsSubmenu");
 let closeTimer = null;
 
 function openBotsMenu() {
@@ -31,12 +31,11 @@ if (botsDropdown) {
   botsDropdown.addEventListener("mouseenter", openBotsMenu);
   botsDropdown.addEventListener("mouseleave", scheduleClose);
 }
+
 if (botsSubmenu) {
   botsSubmenu.addEventListener("mouseenter", () => clearTimeout(closeTimer));
   botsSubmenu.addEventListener("mouseleave", scheduleClose);
 }
-
-
 
 fetch("/api/me", { credentials: "same-origin" })
   .then(function (r) { return r.json(); })
@@ -44,53 +43,67 @@ fetch("/api/me", { credentials: "same-origin" })
     const loginLink = document.querySelector('.side-menu a[href="/login"]');
     if (!loginLink) return;
 
-if (data.logged_in) {
-  const userBlock = document.createElement("div");
-  userBlock.className = "side-menu-user";
-    userBlock.innerHTML =
-    '<span class="side-menu-username">' + data.username + '</span>' +
-    '<a href="/api/logout" class="side-menu-logout">Logout</a>';
+    if (data.logged_in) {
+      const userBlock = document.createElement("div");
+      userBlock.className = "side-menu-user";
+      userBlock.innerHTML =
+        '<span class="side-menu-username">' + data.username + '</span>' +
+        '<a href="/api/logout" class="side-menu-logout">Logout</a>';
       loginLink.replaceWith(userBlock);
     }
   })
   .catch(function () {});
 
 const errors = {
-      missing_fields: "Please fill in all required fields.",
-      username_too_long: "Username must be 50 characters or fewer.",
-      password_mismatch: "Passwords do not match.",
-      password_too_short: "Password must be at least 6 characters.",
-      username_taken: "That username is already taken. Please choose another.",
-      db_error: "A database error occurred. Please try again.",
-    };
+  missing_fields: "Please fill in all required fields.",
+  username_too_long: "Username must be 50 characters or fewer.",
+  password_mismatch: "Passwords do not match.",
+  password_too_short: "Password must be at least 6 characters.",
+  username_taken: "That username is already taken. Please choose another.",
+  db_error: "A database error occurred. Please try again.",
+  invalid_credentials: "Incorrect username or password."
+};
 
 const params = new URLSearchParams(window.location.search);
 const err = params.get("error");
-  if (err) {
-    const box = document.getElementById("errorBox");
+if (err) {
+  const box = document.getElementById("errorBox");
+  if (box) {
     box.textContent = errors[err] || "An error occurred. Please try again.";
     box.classList.add("visible");
-    }
+  }
+}
 
-document.getElementById("signupForm").addEventListener("submit", function (e) {
-  const pw = document.getElementById("password").value;
-  const cpw = document.getElementById("confirm_password").value;
-    if (pw !== cpw) {
+const signupForm = document.getElementById("signupForm");
+if (signupForm) {
+  signupForm.addEventListener("submit", function (e) {
+    const pw = document.getElementById("password");
+    const cpw = document.getElementById("confirm_password");
+    const box = document.getElementById("errorBox");
+
+    if (!pw || !cpw) return;
+
+    if (pw.value !== cpw.value) {
       e.preventDefault();
-      const box = document.getElementById("errorBox");
-      box.textContent = errors.password_mismatch;
-      box.classList.add("visible");
+      if (box) {
+        box.textContent = errors.password_mismatch;
+        box.classList.add("visible");
       }
-    });
-  
-  document.addEventListener("DOMContentLoaded", function () {
+    }
+  });
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+  const chatWrapper = document.querySelector(".chat-wrapper");
   const chatBox = document.getElementById("chatBox");
   const userInput = document.getElementById("userInput");
   const sendBtn = document.getElementById("sendBtn");
 
-  function addMessage(text, sender) {
-    if (!chatBox) return;
+  if (!chatWrapper || !chatBox || !userInput || !sendBtn) return;
 
+  const endpoint = chatWrapper.dataset.chatEndpoint || "/chat";
+
+  function addMessage(text, sender) {
     const div = document.createElement("div");
     div.className = `chat-message ${sender}`;
     div.textContent = text;
@@ -99,8 +112,6 @@ document.getElementById("signupForm").addEventListener("submit", function (e) {
   }
 
   async function sendMessage() {
-    if (!userInput || !sendBtn) return;
-
     const message = userInput.value.trim();
     if (!message) return;
 
@@ -109,12 +120,12 @@ document.getElementById("signupForm").addEventListener("submit", function (e) {
     sendBtn.disabled = true;
 
     try {
-      const response = await fetch("/chat", {
+      const response = await fetch(endpoint, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
         },
-        body: JSON.stringify({ message })
+        body: JSON.stringify({ message: message })
       });
 
       if (!response.ok) {
@@ -131,16 +142,11 @@ document.getElementById("signupForm").addEventListener("submit", function (e) {
     }
   }
 
-  if (sendBtn) {
-    sendBtn.addEventListener("click", sendMessage);
-  }
+  sendBtn.addEventListener("click", sendMessage);
 
-  if (userInput) {
-    userInput.addEventListener("keypress", function (event) {
-      if (event.key === "Enter") {
-        sendMessage();
-      }
-    });
-  }
+  userInput.addEventListener("keypress", function (event) {
+    if (event.key === "Enter") {
+      sendMessage();
+    }
+  });
 });
-

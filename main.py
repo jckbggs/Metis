@@ -12,6 +12,7 @@ from chatbot.mitigating_circumstances import MitigatingAgent
 from chatbot.website_info_bot import WebsiteInfoBot
 from database.auth_queries import get_user_by_username
 from database.password_utils import verify_password
+from database.auth_create import create_user
 
 app = FastAPI()
 
@@ -38,8 +39,44 @@ class ChatRequest(BaseModel):
 app.mount("/static", StaticFiles(directory=str(WEBSITE_DIR)), name="static")
 
 
+@app.post("/api/signup")
+def signup(
+    request: Request,
+    username: str = Form(...),
+    password: str = Form(...),
+    confirm_password: str = Form(...),
+    dob: str = Form(...)
+):
+    username = username.strip()
+
+    if not username or not password or not confirm_password or not dob:
+        return RedirectResponse(url="/signup?error=missing_fields", status_code=303)
+
+    if len(username) > 50:
+        return RedirectResponse(url="/signup?error=username_too_long", status_code=303)
+
+    if len(password) < 6:
+        return RedirectResponse(url="/signup?error=password_too_short", status_code=303)
+
+    if password != confirm_password:
+        return RedirectResponse(url="/signup?error=password_mismatch", status_code=303)
+
+    ok, err = create_user(username, password, dob)
+
+    if not ok:
+        if err == "username_taken":
+            return RedirectResponse(url="/signup?error=username_taken", status_code=303)
+        return RedirectResponse(url="/signup?error=db_error", status_code=303)
+
+    request.session["username"] = username
+    request.session.pop("guest_chat_count", None)
+
+    return RedirectResponse(url="/", status_code=303)
+
+
 @app.post("/api/login")
 def login(request: Request, username: str = Form(...), password: str = Form(...)):
+    username = username.strip()
     user = get_user_by_username(username)
 
     if not user:
@@ -156,6 +193,11 @@ def login_page():
     return FileResponse(WEBSITE_DIR / "login.html")
 
 
+@app.get("/signup")
+def signup_page():
+    return FileResponse(WEBSITE_DIR / "signup.html")
+
+
 @app.get("/your-calendar")
 def your_calendar_page():
     return FileResponse(WEBSITE_DIR / "your_calendar.html")
@@ -169,7 +211,3 @@ def assignment_brief_page():
 @app.get("/assignment-calendar")
 def assignment_calendar_page():
     return FileResponse(WEBSITE_DIR / "assignment-calendar.html")
-
-@app.get("/signup")
-def signup_page():
-    return FileResponse(WEBSITE_DIR / "signup.html")
