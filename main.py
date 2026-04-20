@@ -11,6 +11,7 @@ from starlette.middleware.sessions import SessionMiddleware
 from chatbot.mitigating_circumstances import MitigatingAgent
 from chatbot.website_info_bot import WebsiteInfoBot
 from database.auth_queries import get_user_by_username
+from database.password_utils import verify_password
 
 app = FastAPI()
 
@@ -42,10 +43,10 @@ def login(request: Request, username: str = Form(...), password: str = Form(...)
     user = get_user_by_username(username)
 
     if not user:
-        return RedirectResponse(url="/login?error=invalid_login", status_code=303)
+        return RedirectResponse(url="/login?error=invalid_credentials", status_code=303)
 
-    if password != user["password_hash"]:
-        return RedirectResponse(url="/login?error=invalid_login", status_code=303)
+    if not verify_password(password, user["password_hash"]):
+        return RedirectResponse(url="/login?error=invalid_credentials", status_code=303)
 
     request.session["username"] = user["username"]
     request.session.pop("guest_chat_count", None)
@@ -168,3 +169,7 @@ def assignment_brief_page():
 @app.get("/assignment-calendar")
 def assignment_calendar_page():
     return FileResponse(WEBSITE_DIR / "assignment-calendar.html")
+
+@app.get("/signup")
+def signup_page():
+    return FileResponse(WEBSITE_DIR / "signup.html")

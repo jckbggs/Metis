@@ -1,0 +1,12 @@
+fastapi
+uvicorn[standard]
+pydantic
+python-dotenv
+langchain
+langchain-openai
+psycopg[binary]
+itsdangerous
+python-multipart
+requests
+redis
+aiofiles
