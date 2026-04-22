@@ -8,7 +8,7 @@ from openai import RateLimitError
 from langchain_openai import ChatOpenAI
 from langchain_core.messages import SystemMessage, HumanMessage
 
-load_dotenv(Path(__file__).resolve().parent / ".env")
+load_dotenv(Path(__file__).resolve().parent / ".env", override=True)
 
 MITIGATING_LINK = os.getenv(
     "MITIGATING_LINK",

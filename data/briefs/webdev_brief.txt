@@ -1,0 +1,102 @@
+Assessment Brief
+Module Title: Web Development
+Module Code: CSY1063
+Assessment Code: AS1
+Assessment Weighting: 50%
+Submission Date: 16/03/2025 23:59
+Module Leader: Chris Rafferty
+
+Assessment Overview
+This is an individual assignment. The task is to design and develop a responsive portfolio website. The website must demonstrate HTML and CSS skills and must be managed properly using Git and GitHub.
+
+Main Task
+Create a responsive portfolio website that demonstrates your web development skills and presents your work clearly.
+
+Required Website Structure
+The portfolio must contain at least five pages.
+Required pages include:
+- index.html
+- project.html
+- contact.html
+- videoDemo.html
+- sitereport.html
+
+Requirements
+- The website must be responsive and work across different screen sizes.
+- The pages should be clearly structured and styled consistently.
+- The work must be your own.
+- The project is individual work, not group work.
+- Code should be uploaded to GitHub and developed over time with regular commits.
+- Uploading everything in one final commit can lead to failure.
+- At least three commits on three separate dates are required to pass.
+- A video demonstration is required.
+- A site report is required.
+
+Video Demonstration
+A video demonstration of approximately 2 to 3 minutes is required.
+The video should:
+- show the main pages of the website
+- explain the design choices
+- explain important CSS concepts used
+- demonstrate understanding of the work
+
+Site Report
+A site report is required.
+The site report must be at least 250 words.
+
+GitHub Requirement
+You must use GitHub as part of the development process.
+The project should show regular development activity through commits.
+At least 3 commits on 3 separate dates are required.
+
+AI / Generative AI Policy
+This brief allows GenAI use in an assistive role under Category 2.
+AI can be used in an assistive role, but use must be acknowledged appropriately.
+Failure to reference AI-related content properly may be treated as academic misconduct.
+Students must understand and be able to explain their work.
+
+Assessment / Submission Notes
+- This is not group work.
+- Students must be able to demonstrate understanding of their submitted work.
+- The brief may include viva or academic integrity checks if authorship or understanding is in doubt.
+- Late submission rules may apply according to university policy.
+- Students should check official university systems for final submission and policy guidance.
+
+What the Assignment Is Asking You To Do
+You are being asked to create a responsive portfolio website using HTML and CSS.
+The site should present content clearly, include the required pages, be responsive, and demonstrate good development practice.
+You must also provide a video demonstration, a site report, and evidence of proper GitHub usage.
+
+Deliverables
+- Portfolio website source files
+- Required pages
+- Video demonstration
+- Site report
+- GitHub repository / commit history
+
+Marking Criteria
+Implementation of pages – 30%
+Responsive design – 20%
+Validation and code quality – 20%
+Site report – 10%
+GitHub usage – 15%
+Video demonstration – 5%
+
+Criterion Explanations
+Implementation of pages:
+The required pages must be created correctly and function as expected.
+
+Responsive design:
+The website should adapt well to different screen sizes and devices.
+
+Validation and code quality:
+HTML and CSS should be written clearly and correctly.
+
+Site report:
+The report should explain the work and reflect on the implementation.
+
+GitHub usage:
+The repository should show meaningful development over time.
+
+Video demonstration:
+The video should clearly demonstrate the completed work and show understanding.

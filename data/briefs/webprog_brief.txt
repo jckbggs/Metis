@@ -1,0 +1,269 @@
+Assessment Brief
+Module Title: Web Programming
+Module Code: CSY2089
+Assessment Code: AS1
+Assessment Weighting: 75%
+Submission Date: 22/01/2026 15:00
+Feedback Date: 19/02/2026
+Module Leader: Tom Butler
+Resit Date: 22/03/2026
+
+Assessment Task Overview
+This is an individual assignment.
+You must build a university website using the supplied HTML and CSS layout.
+This is not a design module. There are no marks for changing or improving the look of the supplied website design.
+The website must allow university staff to advertise courses within subject areas.
+There must be a secure administration area where staff can log in and manage website content.
+
+Submission Requirements
+1. If you use code you did not write yourself, you must provide a reference and link where applicable as a comment at the point where that code is used.
+2. You must supply both assessment items and upload them to the correct submission points:
+   - Source code (zip file)
+   - Source code Word document uploaded to Turnitin
+3. This is an individual assignment, not group work. Submitting the same or partially the same code as another student is academic misconduct.
+4. The website must use the supplied layout.
+5. The website must be built using the Docker environment used in class. The marker must be able to run `docker-compose up` and access the site without extra setup.
+6. Only submit the work you want marked. If your zip file contains multiple versions of your code, the work is automatically graded 5%.
+Failure to follow submission requirements results in an instant fail grade of 5%.
+
+Academic Integrity / Viva Note
+If the marker suspects the work is not entirely your own, including excessive AI use, third-party code, or another student's work, you may be required to attend a viva.
+Failure to attend or failure to demonstrate understanding of the code may result in failure.
+
+Setting the Scene
+The University of Northampton wants a new website.
+An in-house designer has created the HTML and CSS.
+This layout has been signed off by the university and must be used.
+The main purpose of the website is to allow university staff to advertise courses available at the university within subject areas.
+There must be a secure admin area where staff can log in and add courses which then appear on the public website.
+
+Two Main Tasks
+1. Implement the requested functionality on the website.
+2. Build the website so it is easy to maintain and reuse in future.
+Additional marks are available for reusable components that could be used on future websites.
+
+Important Context
+The staff who use the website have basic computer skills but are not programmers.
+They must be able to amend content without writing code.
+The product manager has chosen a kanban style development process.
+The assignment is organised around tickets.
+
+Ticket NMP-0001: User Accounts
+Goal:
+Create a page using the supplied layout that allows staff members to log in with a username and password.
+There must also be a superadmin account that can add and remove staff accounts.
+Normal users must not be able to manage staff accounts.
+
+Acceptance Criteria:
+- A superadmin can log in and add new accounts.
+- Once a new account is added, that user can log in and add subject areas and courses.
+- A superadmin can delete accounts.
+- The superadmin account cannot be deleted.
+- Normal users cannot add or remove accounts.
+
+Implementation Guidance:
+- User roles such as superadmin and normal user should be tracked in the database.
+- Password security must be considered.
+- There should be no passwords in code.
+- The solution should be built so new roles can be added in future.
+- Using entities and an ORM is recommended.
+- Try to combine add and edit forms.
+
+Ticket NMP-0002: Add / Display Subject Areas
+Goal:
+Logged-in admin users should be able to add, edit, and delete subject areas.
+Subject areas should appear in the public website menu.
+Clicking a subject area should go to a page showing that subject area heading and eventually its courses.
+
+Acceptance Criteria:
+- Logged-in admin users can add, rename, and delete subject areas.
+- Users who are not logged in cannot add, edit, or delete subject areas.
+- Once a subject area is added, it appears in the menu as a clickable link.
+- Clicking a subject area opens a page with the heading of that subject area.
+
+Implementation Guidance:
+- Avoid separate add and edit pages if possible.
+- Support any number of subject areas.
+- Logged-in admins need a way to view existing subject areas and edit/delete them.
+- Using entities and an ORM is recommended.
+
+Ticket NMP-0003: Add / Display Courses
+Goal:
+Logged-in admin users should be able to add courses to subject areas.
+
+Each course should:
+- be assigned to a subject area
+- have a title
+- have a length in years
+- have a type such as MSc, BSc, MA, BA
+- have a description
+- have a list of modules with module code, title, and short description
+
+Once added, the course should appear on the public website on the relevant subject area page.
+
+Acceptance Criteria:
+- Courses can be added with all required data.
+- Courses can be edited or updated.
+- Courses can be moved from one subject area to another.
+- Courses are visible on the public side of the website in the relevant subject area.
+
+Implementation Guidance:
+- Avoid separate add and edit pages.
+- Support any number of courses.
+- Logged-in admins need a way to manage courses.
+- Consider a proper structure for modules rather than storing them as a single text field.
+- Using entities and an ORM is recommended.
+
+Ticket NMP-0004: Enquiries
+Goal:
+Visitors should be able to submit enquiries using the website.
+Admins should be able to view them when logged in.
+Enquiries need to be tracked as pending or responded to.
+
+Required enquiry fields:
+- Name
+- Email address
+- Phone number (optional)
+- Course name
+- Enquiry text
+
+Acceptance Criteria:
+- Anyone can submit an enquiry.
+- Submitted enquiries are visible to logged-in admins.
+- Enquiries can be marked as responded to.
+- The system logs which logged-in user responded.
+- There is a way to show pending enquiries.
+- There is a way to show responded enquiries.
+
+Implementation Guidance:
+- Use one feature/page structure where possible for pending and responded lists.
+- The "who responded" value must come from the logged-in user for security.
+- Using entities and an ORM is recommended.
+
+Ticket NMP-0005: Course Search
+Goal:
+Users should be able to search courses by:
+- subject area
+- type
+- duration in years (minimum and maximum)
+
+Users may search using one, two, or all three criteria.
+
+Acceptance Criteria:
+- Users can search by type.
+- Users can search by subject area.
+- Users can search by duration.
+- Users can search using one, two, or all three criteria.
+
+Implementation Guidance:
+- Reuse as much of the subject area course-list page as possible.
+- Search should be done in the database, not filtered in PHP.
+- If using an ORM, extend it to support multi-field searching.
+
+Ticket NMP-0006: Part-Time Courses
+Goal:
+Courses should be able to be marked as available part-time.
+The public site should show whether a course can be completed part time.
+Search should also support filtering for part-time courses.
+
+Acceptance Criteria:
+- Add/edit course forms include a part-time option.
+- Subject area course pages show whether a course can be completed part time.
+- Search results show whether a course can be completed part time.
+- Search supports filtering to only show part-time courses.
+
+Implementation Guidance:
+- Existing courses should remain backward compatible.
+- Existing records can assume part time = no until updated.
+
+Ticket NMP-0007: Pagination
+Goal:
+Subject area pages and search results should show 10 courses per page with page links.
+
+Acceptance Criteria:
+- Subject area pages show 10 courses per page with clickable page numbers.
+- Search results also support pagination.
+
+Implementation Guidance:
+- Reuse the same list structure for subject area pages and search results where possible.
+- Do pagination in the database using LIMIT and OFFSET.
+- For testing, a lower threshold can be used temporarily, but final submission should use 10 per page.
+
+Deliverables
+1. A short report in markdown format including:
+   - a list of each ticket and assessment criteria
+   - for each acceptance criterion:
+     - the path to the file containing that feature
+     - the line number of that feature
+   - the URL to the admin login page
+   - a valid username and password for the superadmin account
+2. A zip file containing:
+   - all source code
+   - the report
+   - database.sql generated from the server after running `docker compose down`
+3. A source code Word document:
+   - copy and paste all PHP files into a single Word document and upload to Turnitin
+
+Learning Outcomes
+- Design and implement dynamic applications for the Internet
+- Implement modern best practice development techniques to develop a website
+- Explain and assess the importance of good design criteria in Internet multimedia systems
+- Make, justify, and implement decisions following evaluation of options for website development
+- Synthesize information clearly and logically
+- Evaluate alternative approaches to problem solving and justify recommendations
+
+AI / Academic Practice Guidance
+AI may be used in a supporting role.
+You must ensure you understand any AI-generated code.
+Where AI is used, you must:
+1. Add a comment at the start of the AI-generated code that includes:
+   - that the following code used AI assistance
+   - a brief overview of what you understand the code to be doing
+   - the prompt you used
+2. Add a comment at the end of the AI-generated code.
+
+If AI has been used for significant portions of the assignment or looks undocumented, you may be asked to attend a viva.
+You may make use of GenAI in an assistive role, but you must acknowledge this appropriately.
+Any place where AI has been used must be documented in code, clearly stating what problem it solved and what the solution is doing.
+Failure to follow this instruction results in a capped grade of 30%.
+
+Marking Rubric Overview
+The rubric is split into:
+- Functionality (50%)
+- Code Quality (50%)
+
+Functionality (50%)
+This is based on how many acceptance criteria across the tickets are met and whether the website works correctly.
+Lower grades apply where fewer acceptance criteria are met or where core functionality is broken.
+Higher grades apply as more acceptance criteria are met.
+
+Code Quality (50%)
+Code quality is capped by functionality.
+A broken system cannot achieve a high code-quality mark even if the code structure is good.
+Code quality considers:
+- reducing repetition
+- use of reusable layout/components
+- password security
+- separation of concerns
+- avoiding repeated bootstrap code
+- avoiding separate add/edit pages where possible
+- single entry point and controllers
+- use of objects and classes
+- database abstraction
+- autoloading
+- namespaces
+- reusable architecture that can be moved to another site without modification
+
+What This Assignment Is Asking You To Do
+You must build a working university course-advertising website using the supplied design.
+The system must support secure admin logins, subject area management, course management, enquiries, search, part-time course support, and pagination.
+The work must be maintainable, secure, and easy for non-programmer staff to use.
+You must also follow the Docker and submission requirements exactly.
+
+Overall Summary
+This is an individual web programming assignment.
+The priority is working functionality plus good code structure.
+The supplied layout must be used.
+Docker must work correctly.
+AI can be used only in a documented supporting role.
+The work must be your own and you must be able to explain it.

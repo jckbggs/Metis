@@ -54,31 +54,41 @@
 
         <div class="auth-error" id="errorBox"></div>
 
-        <form method="POST" action="/api/signup" id="signupForm">
-          <div class="form-group">
-            <label for="username">Username</label>
-            <input type="text" id="username" name="username" required maxlength="50" autocomplete="username" />
-            <span class="hint">Max 50 characters</span>
-          </div>
+<form method="POST" action="/api/signup" id="signupForm">
+  <div class="form-group">
+    <label for="username">Username</label>
+    <input type="text" id="username" name="username" required maxlength="50" autocomplete="username" />
+    <span class="hint">Max 50 characters</span>
+  </div>
 
-          <div class="form-group">
-            <label for="dob">Date of Birth</label>
-            <input type="date" id="dob" name="dob" required />
-          </div>
+  <div class="form-group">
+    <label for="dob">Date of Birth</label>
+    <input type="date" id="dob" name="dob" required />
+  </div>
 
-          <div class="form-group">
-            <label for="password">Password</label>
-            <input type="password" id="password" name="password" required autocomplete="new-password" />
-            <span class="hint">Minimum 6 characters</span>
-          </div>
+  <div class="form-group">
+    <label for="password">Password</label>
+    <input type="password" id="password" name="password" required autocomplete="new-password" />
+    <span class="hint">Minimum 6 characters</span>
+  </div>
 
-          <div class="form-group">
-            <label for="confirm_password">Confirm Password</label>
-            <input type="password" id="confirm_password" name="confirm_password" required autocomplete="new-password" />
-          </div>
+  <div class="form-group">
+    <label for="confirm_password">Confirm Password</label>
+    <input type="password" id="confirm_password" name="confirm_password" required autocomplete="new-password" />
+  </div>
 
-          <button type="submit" class="auth-btn">Create Account</button>
-        </form>
+  <div class="form-group">
+    <label for="demo_brief">Choose a Demo Assignment Brief</label>
+    <select id="demo_brief" name="demo_brief" required>
+      <option value="">Select a brief</option>
+      <option value="webdev">CSY1063 Web Development</option>
+      <option value="webprog">CSY2089 Web Programming</option>
+    </select>
+    <span class="hint">This brief will be linked to your account after signup</span>
+  </div>
+
+  <button type="submit" class="auth-btn">Create Account</button>
+</form>
 
         <p class="auth-footer">
           Already have an account? <a href="/login">Login</a>
