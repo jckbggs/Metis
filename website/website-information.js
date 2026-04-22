@@ -38,7 +38,7 @@ document.addEventListener("DOMContentLoaded", async function () {
       initialBotMessage.textContent =
         "Hi. I’m the Metis guest chatbot. I can explain what the website does and what each page is for.";
       if (remainingBox) {
-        remainingBox.textContent = "Guest messages remaining: 10";
+        remainingBox.textContent = "Guest messages remaining: 15";
         remainingBox.style.display = "block";
       }
     }
