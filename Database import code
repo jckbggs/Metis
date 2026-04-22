@@ -1,0 +1,1 @@
+Get-Content .\db\presentation_backup.sql | docker exec -i postgres-db psql -U myuser -d mydb
