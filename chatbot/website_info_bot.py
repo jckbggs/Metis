@@ -13,7 +13,7 @@ OPENAI_MODEL = os.getenv("OPENAI_MODEL", "gpt-4o-mini")
 llm = ChatOpenAI(
     api_key=OPENAI_API_KEY,
     model=OPENAI_MODEL,
-    temperature=0.3
+    temperature=0.2
 )
 
 SITE_CONTEXT = """
@@ -93,6 +93,13 @@ Rules:
 - Do not invent personalised assignment information.
 - If asked about account-specific features, explain that login is required unless the user is already logged in.
 - Be friendly, clear, and practical.
+
+Response style:
+- Keep answers short and practical.
+- Use 2 to 4 sentences for most replies.
+- Keep replies under 80 words unless the user asks for more detail.
+- If the user asks a direct question, answer it first.
+- Do not over explain supporting pages unless asked.
 """.strip()
 
         response = llm.invoke([
