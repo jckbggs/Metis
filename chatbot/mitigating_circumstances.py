@@ -16,7 +16,7 @@ OPENAI_MODEL = os.getenv("OPENAI_MODEL", "gpt-4o-mini")
 llm = ChatOpenAI(
     api_key=OPENAI_API_KEY,
     model=OPENAI_MODEL,
-    temperature=0.2,
+    temperature=0.1,
 )
 
 EXTENSION_TYPES = {"AS", "ES", "DI", "PJ"}
@@ -104,7 +104,6 @@ class MitigatingCircumstancesBot:
             if match:
                 return match.group(1).upper()
 
-            # fallback words if exact code is missing
             text = str(source).lower()
             if "exam" in text:
                 return "EX"
@@ -132,13 +131,19 @@ class MitigatingCircumstancesBot:
             return "unknown"
 
         today = date.today()
+        days_diff = (today - due_date).days
 
-        if today <= due_date:
-            return "before_or_on_due_date"
+        if days_diff < 0:
+            return "before_due_date"
 
-        days_after = (today - due_date).days
-        if days_after <= 7:
+        if days_diff == 0:
+            return "on_due_date"
+
+        if days_diff <= 7:
             return "within_7_days_after_due_date"
+
+        if days_diff > 60:
+            return "historical_or_demo_due_date"
 
         return "more_than_7_days_after_due_date"
 
@@ -192,7 +197,9 @@ class MitigatingCircumstancesBot:
 
         if submitted_already:
             likely_route = "unfit_to_sit_or_deferral"
-        elif extension_allowed is True and timing_state == "before_or_on_due_date":
+        elif timing_state == "historical_or_demo_due_date":
+            likely_route = "needs_deadline_confirmation"
+        elif extension_allowed is True and timing_state in {"before_due_date", "on_due_date"}:
             likely_route = "extension"
         elif extension_allowed is True and timing_state == "within_7_days_after_due_date":
             likely_route = "late_submission_or_deferral"
@@ -200,8 +207,6 @@ class MitigatingCircumstancesBot:
             likely_route = "deferral_or_local_arrangements"
         elif long_term_issue:
             likely_route = "deferral"
-        else:
-            likely_route = "general_guidance"
 
         return {
             "assessment_code": assessment_code,
@@ -259,16 +264,20 @@ Your task:
 - If the user seems to have already submitted or attended, consider fit to sit and unfit to sit guidance.
 - If timing suggests late submission within 7 days for first opportunity coursework, explain the capped mark risk carefully.
 - If critical information is missing, say what extra information matters.
-- Do not claim to make the final university decision.
+- If the due date appears historical or clearly from an old or demo brief, do not make a final eligibility judgement based only on that date.
+- In that case, say the stored brief date is in the past and ask the user to confirm whether it is still the active deadline.
 - Do not say "you are definitely eligible."
+- Do not say "you are not eligible" unless timing is clearly confirmed.
 - Prefer phrases like "may be possible", "appears more likely", or "based on the policy".
 - Do not invent university rules that are not in the provided summaries.
+- Do not claim to make the final university decision.
 
 Response style:
 - Keep answers short and practical.
 - Use 2 to 4 sentences for most replies.
 - Keep replies under 90 words unless the user asks for more detail.
 - If the user asks a yes/no question, answer yes or no first.
+- When the deadline is uncertain, ask one short clarification question instead of making a firm conclusion.
 - Do not use numbered lists unless the user asks for steps.
 - Do not repeat policy wording unless necessary.
 - End with one short next step suggestion only if useful.
