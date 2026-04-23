@@ -22,7 +22,8 @@ def get_brief_for_user(username: str):
                    brief_summary,
                    assignment_type,
                    is_group_work,
-                   is_exam
+                   is_exam,
+                   is_resit
             FROM briefs
             WHERE username = %s
             ORDER BY due_date ASC NULLS LAST

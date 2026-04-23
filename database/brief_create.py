@@ -18,6 +18,7 @@ DEMO_BRIEFS = {
         "assignment_type": "coursework",
         "is_group_work": False,
         "is_exam": False,
+        "is_resit": False,
         "criteria": [
             {
                 "criteria_name": "Implementation of pages",
@@ -80,6 +81,7 @@ DEMO_BRIEFS = {
         "assignment_type": "coursework",
         "is_group_work": False,
         "is_exam": False,
+        "is_resit": False,
         "criteria": [
             {
                 "criteria_name": "Functionality",
@@ -92,6 +94,69 @@ DEMO_BRIEFS = {
                 "criteria_name": "Code quality",
                 "criteria_description": "Maintainability, abstraction, separation of concerns, and overall code structure.",
                 "weight": 50,
+                "score_min": 0,
+                "score_max": 100,
+            },
+        ],
+    },
+    "sef_resit": {
+        "module": "CSY1064 | Software Engineering Fundamentals",
+        "study_level": "undergraduate",
+        "module_leader": "Mark Johnson",
+        "weighting": 75.00,
+        "word_limit": None,
+        "assignment_no": 1,
+        "description": "AS1 resit assignment requiring an individually produced technical report covering problem domain review, requirements specification, interface design, and systems architecture for a zoo visitor mobile application.",
+        "ai_policy": "assistive",
+        "ai_policy_details": "Category 2: GenAI can be used in an assistive role. AI may support research and idea generation, but the report must be written in the student's own words and AI-generated text must not be pasted directly.",
+        "referencing_style": "Harvard",
+        "due_date": "2025-04-20",
+        "brief_file_path": "data/briefs/sef_resit_brief.txt",
+        "brief_summary": "An individual AS1 resit technical report for a zoo visitor mobile application, focusing on requirements, interface design, and architecture.",
+        "assignment_type": "coursework",
+        "is_group_work": False,
+        "is_exam": False,
+        "is_resit": True,
+        "criteria": [
+            {
+                "criteria_name": "Formulated Aims and Objectives",
+                "criteria_description": "Clear identification and exploration of the project's aims and objectives.",
+                "weight": 10,
+                "score_min": 0,
+                "score_max": 100,
+            },
+            {
+                "criteria_name": "Problem Domain Review",
+                "criteria_description": "Investigation of the problem domain and review of comparable systems.",
+                "weight": 10,
+                "score_min": 0,
+                "score_max": 100,
+            },
+            {
+                "criteria_name": "Requirement Specification Document",
+                "criteria_description": "Quality and completeness of the requirements specification.",
+                "weight": 20,
+                "score_min": 0,
+                "score_max": 100,
+            },
+            {
+                "criteria_name": "System Interface Design Documentation",
+                "criteria_description": "Quality of wireframes, navigation diagrams, mock-ups, and related interface design documentation.",
+                "weight": 20,
+                "score_min": 0,
+                "score_max": 100,
+            },
+            {
+                "criteria_name": "Systems Architecture Analysis and Design",
+                "criteria_description": "Quality of analysis, class analysis, and systems architecture design documentation.",
+                "weight": 20,
+                "score_min": 0,
+                "score_max": 100,
+            },
+            {
+                "criteria_name": "Report Quality",
+                "criteria_description": "Presentation, formatting, structure, clarity, and use of English in the report.",
+                "weight": 20,
                 "score_min": 0,
                 "score_max": 100,
             },
@@ -125,9 +190,10 @@ def create_demo_brief_for_user(username: str, demo_brief_key: str):
                 brief_summary,
                 assignment_type,
                 is_group_work,
-                is_exam
+                is_exam,
+                is_resit
             )
-            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
             RETURNING brief_id
             """,
             (
@@ -148,6 +214,7 @@ def create_demo_brief_for_user(username: str, demo_brief_key: str):
                 brief["assignment_type"],
                 brief["is_group_work"],
                 brief["is_exam"],
+                brief["is_resit"],
             ),
         )
 

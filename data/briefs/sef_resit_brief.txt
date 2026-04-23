@@ -1,0 +1,177 @@
+Assessment Brief
+Module Title: Software Engineering Fundamentals
+Module Code: CSY1064
+Module Level: Level 4
+Assessment Code: AS1 Resit Assignment
+Assessment Type: Resit Assignment
+Assessment Focus: Lifecycle stages – Problem Identification to Systems Architecture Design
+Credit Value: 20
+Module Leader: Mark Johnson
+Assessment Deliverable: An individually produced technical report
+Weighting: 75%
+Submission Date: Sunday 20-04-2025
+Feedback and Grades: See NILE for feedback under Assessment and Submission
+
+Learning Outcomes Aligned to this Assessment
+Aim:
+This assessment aims to develop and demonstrate knowledge and understanding of conducting requirements engineering, designing, and documenting system specifications and interfaces for a client-driven project based on simulated client interviews and collaborative teamwork.
+
+Subject-Specific Knowledge, Understanding and Application:
+a) Gather and interpret client requirements.
+Identify and understand critical information from client interviews to capture and define system needs.
+
+b) Analyse and document findings.
+Record and interpret findings from elicitation activities, highlighting essential system requirements and constraints.
+
+c) Develop comprehensive system specifications.
+Create detailed requirement specifications and interface designs based on findings from client interactions and further research.
+
+d) Design system architecture.
+Produce system design documentation that includes wireframes, mock-ups, navigation diagrams, class analysis documents and architectural designs to support the subsequent effective development of the proposed solution.
+
+e) Evaluate project documentation quality.
+Review and refine project reports to ensure completeness, coherence, and adherence to professional standards.
+
+Assessment Overview
+This assignment requires you to complete all tasks to achieve the learning outcomes.
+
+Key Elements for the Assessment:
+1. Document Problem Domain Investigation
+- Investigate comparable systems relevant to this project.
+
+2. Requirements Specification Development
+- Develop a comprehensive requirements specification that outlines the key functionalities and system constraints based on your problem domain review.
+- Ensure the document includes prioritised system features and meets professional standards for clarity and completeness.
+
+3. System Interface Design
+- Create detailed interface designs that include wireframes, navigation diagrams, and mock-ups to support system development.
+- Address areas such as usability, accessibility, and client requirements in the design documentation.
+
+4. System Architecture Analysis and Design
+- Document the analysis and design of the core system architecture, including class charts and other relevant system diagrams/charts.
+- Ensure the designs reflect an efficient and effective structure, adhering to industry best practices.
+
+Background
+Client: Claybrook Zoo
+Location: Northwest England
+Established: 1965
+Current Zoo Manager: Matthew Jones
+
+Claybrook Zoo is a small, family-oriented zoo with a long history of supporting educational initiatives to enhance visitor experiences. The zoo has approached your software development team to investigate the possibility of developing a mobile application that will enhance the experience of visitors during their time at the zoo.
+
+Your task is to develop the specifications, interface designs, and architectural blueprints for this mobile application. The initial client requirements are listed below and include enough information for you to develop a simple solution without needing to interview the client.
+
+Initial System Requirements
+The zoo houses animals across several distinct areas:
+- Aviary (Birds)
+- Hothouse (Reptiles and Amphibians)
+- Aquarium (Fish)
+- Cages/Compounds (Mammals)
+
+The mobile application must provide interactive visitor engagement features, including:
+- Interactive Zoo Map: a digital map displaying the zoo layout, with real-time navigation to different enclosures, attractions, and amenities.
+- Animal Information Portal: visitors can scan QR codes placed at each enclosure to access detailed information about animals, including species name, given name, date of birth, gender, average life span, category/classification, dietary requirements, natural habitat, global population distribution, conservation status, fun facts, and audio clips.
+- Personalised Tour Guide: visitors can create custom itineraries based on their interests such as species, feeding times, or special events.
+- Augmented Reality features: 3D visualisations of animals and habitats when visitors scan designated markers.
+- Live Zoo Updates and Notifications: real-time updates on feeding times, talks, events, and promotions.
+- Visitor Feedback System: visitors can rate exhibits and suggest improvements.
+- Multi-Language Support: multilingual translations of content.
+
+Core Application Features
+The mobile application must provide the following key functionalities:
+1. QR Code Scanning
+2. GPS-Based Navigation
+3. Customisable Alerts and Reminders
+4. Visitor Engagement Tools
+   - Photo and video sharing with social media integration
+   - Interactive quizzes and scavenger hunts
+5. Zoo Membership and Ticketing Integration
+   - Ticket and membership purchasing
+   - Digital passes for contactless entry
+6. Accessibility Features
+   - Audio descriptions for visually impaired visitors
+   - Sign language video guides for key exhibits
+
+Additional Features / Complex Functionality
+- Animal Adoption Programme
+- Live Camera Feeds
+- Educational Content and Games
+- Push Notifications
+- Virtual Tour Mode
+- Zoo Merchandise Store
+
+Assessment Tasks
+You must develop a suitable technical report outlining the following key sections:
+1. A comparative review of other mobile applications used to enhance visitor experience.
+2. A requirement specification for all the key software components provided in the brief.
+3. Suitable interface designs for the key software applications.
+4. Suitable system analysis and design documentation for the core records management system.
+
+Documentation Requirements
+The report should include:
+
+1. Introduction
+1.1 Project Background
+1.2 Project Aims and Objectives
+1.3 Project Development Methodology
+
+2. Requirements Engineering
+2.1 Comparable Software System Review
+2.2 Requirements Specification
+2.2.1 Functional Requirements
+2.2.2 Performance Requirements
+2.2.3 Design Constraints
+
+3. System Interface Designs
+3.1 Draft Interface Designs for Mobile Application
+3.1.1 Wireframes
+3.1.2 System Navigation Diagram
+3.1.3 System Screen Mock-ups
+3.1.4 System Activity Event Diagrams
+
+4. Analysis and Design Records Management System
+4.1 Preliminary Analysis Stages
+4.1.1 Textual Analysis
+4.1.2 Significant Event Analysis
+4.2 Draft System Architecture Designs
+4.2.1 First Draft BON System Architecture Diagram
+4.2.2 BON Class Charts
+
+5. Report Conclusion
+
+6. References
+
+Assessment Submission and Policies
+- The deadline is 11.59 pm (British time) on the due date provided on NILE.
+- Submit your work on NILE under Assessment and Submission | Assignment 1 Technical Report.
+- Only work submitted through NILE will be graded.
+- Submission should be in an appropriate format such as a Word document.
+- Work correctly uploaded to Turnitin will get a receipt for proof of submission.
+
+Use of Generative AI
+Category 2: GenAI can be used in an assistive role.
+You may use GenAI in an assistive role, for example for research support and content suggestions, but you must write the report in your own words.
+It is not acceptable to cut and paste AI-generated content directly.
+
+Academic Integrity
+- The University policy on Academic Integrity and Misconduct must be strictly implemented.
+- All work must be your own.
+- All work must be based on module content.
+- All work for this assignment must be developed originally and solely for this submission.
+- All sources must be referenced and clearly cited.
+- Failing to meet the university policy on AI and plagiarism may impact your grade.
+- Failure to follow the submission procedure may impact your grade.
+
+Assessment Criteria Weightings
+- Formulated Aims and Objectives – 10%
+- Problem Domain Review – 10%
+- Requirement Specification Document – 20%
+- System Interface Design Documentation – 20%
+- Systems Architecture Analysis and Design – 20%
+- Report Quality – Presentation, format and use of English – 20%
+
+Overall Summary
+This is a Level 4 resit coursework assignment for CSY1064.
+You must produce an individual technical report for a zoo visitor mobile application.
+The work focuses on requirements, interface design, and architecture rather than coding a finished app.
+AI may be used only in an assistive role and must not replace your own writing.
