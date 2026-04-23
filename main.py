@@ -8,7 +8,7 @@ from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 from starlette.middleware.sessions import SessionMiddleware
 
-from chatbot.mitigating_circumstances import MitigatingAgent
+from chatbot.mitigating_circumstances import MitigatingCircumstancesBot
 from chatbot.website_info_bot import WebsiteInfoBot
 from chatbot.assignment_brief_bot import AssignmentBriefBot
 
@@ -20,7 +20,7 @@ from database.brief_queries import get_brief_for_user, get_marking_criteria_for_
 
 app = FastAPI()
 
-load_dotenv(Path(__file__).resolve().parent / "chatbot" / ".env")
+load_dotenv(Path(__file__).resolve().parent / "chatbot" / ".env", override=True)
 
 app.add_middleware(
     SessionMiddleware,
@@ -30,7 +30,7 @@ app.add_middleware(
 BASE_DIR = Path(__file__).resolve().parent
 WEBSITE_DIR = BASE_DIR / "website"
 
-mitigating_bot = MitigatingAgent()
+mitigating_bot = MitigatingCircumstancesBot()
 website_info_bot = WebsiteInfoBot()
 assignment_brief_bot = AssignmentBriefBot()
 
@@ -115,8 +115,16 @@ def api_me(request: Request):
 
 
 @app.post("/chat")
-def chat(req: ChatRequest):
-    reply = mitigating_bot.handle(req.message)
+def chat(req: ChatRequest, request: Request):
+    username = request.session.get("username")
+    brief = get_brief_for_user(username) if username else None
+
+    reply = mitigating_bot.reply(
+        user_input=req.message,
+        username=username,
+        brief=brief,
+    )
+
     return {"reply": reply}
 
 
