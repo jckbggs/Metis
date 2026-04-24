@@ -56,57 +56,57 @@ document.addEventListener("DOMContentLoaded", async function () {
     console.error("Failed to load user info:", error);
   }
 
-  async function sendMessage() {
-    const message = userInput.value.trim();
-    if (!message) return;
+async function sendMessage() {
+  const message = userInput.value.trim();
+  if (!message) return;
 
-    addMessage(message, "user");
-    userInput.value = "";
-    sendBtn.disabled = true;
-    userInput.disabled = true;
+  addMessage(message, "user");
+  userInput.value = "";
+  sendBtn.disabled = true;
+  userInput.disabled = true;
 
-    const thinkingBubble = addThinkingMessage();
+  const thinkingBubble = addThinkingMessage();
+  let shouldKeepDisabled = false;
 
-    try {
-      const response = await fetch(endpoint, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ message })
-      });
+  try {
+    const response = await fetch(endpoint, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ message })
+    });
 
-      if (!response.ok) {
-        throw new Error(`HTTP ${response.status}`);
-      }
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}`);
+    }
 
-      const data = await response.json();
+    const data = await response.json();
 
-      thinkingBubble.remove();
-      addMessage(data.reply, "bot");
+    thinkingBubble.remove();
+    addMessage(data.reply, "bot");
 
-      if (!data.logged_in && remainingBox && typeof data.remaining === "number") {
-        remainingBox.textContent = `Guest messages remaining: ${data.remaining}`;
-      }
+    if (!data.logged_in && remainingBox && typeof data.remaining === "number") {
+      remainingBox.textContent = `Guest messages remaining: ${data.remaining}`;
+    }
 
-      if (!data.logged_in && data.remaining === 0) {
-        userInput.disabled = true;
-        sendBtn.disabled = true;
-      }
-    } catch (error) {
-      console.error("Website info chat error:", error);
-      thinkingBubble.remove();
-      addMessage("Sorry, something went wrong.", "bot");
-      userInput.disabled = false;
+    if (!data.logged_in && data.remaining === 0) {
+      shouldKeepDisabled = true;
+      userInput.disabled = true;
+      sendBtn.disabled = true;
+    }
+  } catch (error) {
+    console.error("Website info chat error:", error);
+    thinkingBubble.remove();
+    addMessage("Sorry, something went wrong.", "bot");
+  } finally {
+    if (!shouldKeepDisabled) {
       sendBtn.disabled = false;
-    } finally {
-      if (!userInput.disabled) {
-        sendBtn.disabled = false;
-        userInput.disabled = false;
-        userInput.focus();
-      }
+      userInput.disabled = false;
+      userInput.focus();
     }
   }
+}
 
   sendBtn.addEventListener("click", sendMessage);
 
