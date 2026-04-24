@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
   function addThinkingMessage() {
     const div = document.createElement("div");
-    div.className = "chat message bot thinking";
+    div.className = "chat-message bot thinking";
     div.textContent = "Thinking...";
     chatBox.appendChild(div);
     chatBox.scrollTop = chatBox.scrollHeight;
