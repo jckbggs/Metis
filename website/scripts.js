@@ -114,6 +114,7 @@ document.addEventListener("DOMContentLoaded", function () {
   if (!chatWrapper || !chatBox || !userInput || !sendBtn) return;
 
   const endpoint = chatWrapper.dataset.chatEndpoint || "/chat";
+  if (endpoint === "/chat/website-info") return;
 
   function addMessage(text, sender) {
     const div = document.createElement("div");
@@ -121,6 +122,16 @@ document.addEventListener("DOMContentLoaded", function () {
     div.textContent = text;
     chatBox.appendChild(div);
     chatBox.scrollTop = chatBox.scrollHeight;
+    return div;
+  }
+
+  function addThinkingMessage() {
+    const div = document.createElement("div");
+    div.className = "chat message bot thinking";
+    div.textContent = "Thinking...";
+    chatBox.appendChild(div);
+    chatBox.scrollTop = chatBox.scrollHeight;
+    return div;
   }
 
   async function sendMessage() {
@@ -130,6 +141,9 @@ document.addEventListener("DOMContentLoaded", function () {
     addMessage(message, "user");
     userInput.value = "";
     sendBtn.disabled = true;
+    userInput.disabled = true;
+
+    const thinkingBubble = addThinkingMessage();
 
     try {
       const response = await fetch(endpoint, {
@@ -145,12 +159,16 @@ document.addEventListener("DOMContentLoaded", function () {
       }
 
       const data = await response.json();
+      thinkingBubble.remove();
       addMessage(data.reply, "bot");
     } catch (error) {
       console.error("Chat error:", error);
+      thinkingBubble.remove();
       addMessage("Sorry, something went wrong.", "bot");
     } finally {
       sendBtn.disabled = false;
+      userInput.disabled = false;
+      userInput.focus();
     }
   }
 

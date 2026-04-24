@@ -18,6 +18,16 @@ document.addEventListener("DOMContentLoaded", async function () {
     div.textContent = text;
     chatBox.appendChild(div);
     chatBox.scrollTop = chatBox.scrollHeight;
+    return div;
+  }
+
+  function addThinkingMessage() {
+    const div = document.createElement("div");
+    div.className = "chat message bot thinking";
+    div.textContent = "Thinking...";
+    chatBox.appendChild(div);
+    chatBox.scrollTop = chatBox.scrollHeight;
+    return div;
   }
 
   try {
@@ -53,6 +63,9 @@ document.addEventListener("DOMContentLoaded", async function () {
     addMessage(message, "user");
     userInput.value = "";
     sendBtn.disabled = true;
+    userInput.disabled = true;
+
+    const thinkingBubble = addThinkingMessage();
 
     try {
       const response = await fetch(endpoint, {
@@ -68,6 +81,8 @@ document.addEventListener("DOMContentLoaded", async function () {
       }
 
       const data = await response.json();
+
+      thinkingBubble.remove();
       addMessage(data.reply, "bot");
 
       if (!data.logged_in && remainingBox && typeof data.remaining === "number") {
@@ -80,10 +95,15 @@ document.addEventListener("DOMContentLoaded", async function () {
       }
     } catch (error) {
       console.error("Website info chat error:", error);
+      thinkingBubble.remove();
       addMessage("Sorry, something went wrong.", "bot");
+      userInput.disabled = false;
+      sendBtn.disabled = false;
     } finally {
       if (!userInput.disabled) {
         sendBtn.disabled = false;
+        userInput.disabled = false;
+        userInput.focus();
       }
     }
   }
