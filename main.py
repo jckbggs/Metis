@@ -1,5 +1,10 @@
 import os
+import json
+import time
+import uuid
 from pathlib import Path
+from datetime import datetime, timezone
+from threading import Lock
 
 from dotenv import load_dotenv
 from fastapi import FastAPI, Request, Form
@@ -30,6 +35,9 @@ app.add_middleware(
 BASE_DIR = Path(__file__).resolve().parent
 WEBSITE_DIR = BASE_DIR / "website"
 
+EVALUATION_LOG_PATH = BASE_DIR / "data" / "evaluation_logs" / "chatbot_evaluation.jsonl"
+evaluation_log_lock = Lock()
+
 mitigating_bot = MitigatingCircumstancesBot()
 website_info_bot = WebsiteInfoBot()
 assignment_brief_bot = AssignmentBriefBot()
@@ -39,6 +47,56 @@ GUEST_CHAT_LIMIT = 15
 
 class ChatRequest(BaseModel):
     message: str
+
+
+def get_anonymous_participant_id(request: Request) -> str:
+    """
+    Creates a random anonymous participant ID
+    This avoids saving real usernames for evaluation
+    """
+    if "anonymous_participant_id" not in request.session:
+        request.session["anonymous_participant_id"] = "P-" + str(uuid.uuid4())[:8]
+
+    return request.session["anonymous_participant_id"]
+
+
+def save_evaluation_log(
+    request: Request,
+    bot_name: str,
+    user_input: str,
+    bot_output: str,
+    response_time_ms: int,
+    logged_in: bool = False,
+    success: bool = True,
+    error: str | None = None,
+):
+    """
+    Saves anonymised chatbot evaluation data to a JSONL file.
+
+    It does not save the real username.
+    It saves participant_id instead.
+    """
+    try:
+        EVALUATION_LOG_PATH.parent.mkdir(parents=True, exist_ok=True)
+
+        row = {
+            "timestamp": datetime.now(timezone.utc).isoformat(),
+            "participant_id": get_anonymous_participant_id(request),
+            "bot_name": bot_name,
+            "account_type": "logged_in" if logged_in else "guest",
+            "user_input": user_input,
+            "bot_output": bot_output,
+            "response_time_ms": response_time_ms,
+            "success": success,
+            "error": str(error) if error else None,
+        }
+
+        with evaluation_log_lock:
+            with EVALUATION_LOG_PATH.open("a", encoding="utf-8") as f:
+                f.write(json.dumps(row, ensure_ascii=False) + "\n")
+
+    except Exception as log_error:
+        print("Evaluation logging failed:", log_error)
 
 
 app.mount("/static", StaticFiles(directory=str(WEBSITE_DIR)), name="static")
@@ -74,7 +132,11 @@ def signup(
             return RedirectResponse(url="/signup?error=username_taken", status_code=303)
         return RedirectResponse(url="/signup?error=db_error", status_code=303)
 
-    create_demo_brief_for_user(username, demo_brief)
+    try:
+        create_demo_brief_for_user(username, demo_brief)
+    except Exception as e:
+        print("Signup brief creation error:", e)
+        return RedirectResponse(url="/signup?error=db_error", status_code=303)
 
     request.session["username"] = username
     request.session.pop("guest_chat_count", None)
@@ -116,86 +178,183 @@ def api_me(request: Request):
 
 @app.post("/chat")
 def chat(req: ChatRequest, request: Request):
+    start_time = time.perf_counter()
+
     username = request.session.get("username")
-    brief = get_brief_for_user(username) if username else None
+    logged_in = bool(username)
 
-    reply = mitigating_bot.reply(
-        user_input=req.message,
-        username=username,
-        brief=brief,
-    )
+    reply = ""
+    success = True
+    error = None
 
-    return {"reply": reply}
+    try:
+        brief = get_brief_for_user(username) if username else None
+
+        reply = mitigating_bot.reply(
+            user_input=req.message,
+            username=username,
+            brief=brief,
+        )
+
+        return {"reply": reply}
+
+    except Exception as e:
+        success = False
+        error = str(e)
+        reply = "Sorry, something went wrong."
+        print("Mitigating bot error:", e)
+        return {"reply": reply}
+
+    finally:
+        response_time_ms = int((time.perf_counter() - start_time) * 1000)
+
+        save_evaluation_log(
+            request=request,
+            bot_name="mitigating_circumstances",
+            user_input=req.message,
+            bot_output=reply,
+            response_time_ms=response_time_ms,
+            logged_in=logged_in,
+            success=success,
+            error=error,
+        )
 
 
 @app.post("/chat/website-info")
 def website_info_chat(req: ChatRequest, request: Request):
+    start_time = time.perf_counter()
+
     username = request.session.get("username")
     logged_in = bool(username)
 
-    if not logged_in:
-        current_count = request.session.get("guest_chat_count", 0)
+    reply = ""
+    success = True
+    error = None
 
-        if current_count >= GUEST_CHAT_LIMIT:
+    try:
+        if not logged_in:
+            current_count = request.session.get("guest_chat_count", 0)
+
+            if current_count >= GUEST_CHAT_LIMIT:
+                reply = "You have reached the guest chat limit. Please log in to continue using the chatbot."
+
+                return {
+                    "reply": reply,
+                    "remaining": 0,
+                    "logged_in": False,
+                    "username": None
+                }
+
+            request.session["guest_chat_count"] = current_count + 1
+            remaining = GUEST_CHAT_LIMIT - request.session["guest_chat_count"]
+
+            reply = website_info_bot.reply(
+                req.message,
+                username=None,
+                logged_in=False
+            )
+
             return {
-                "reply": "You have reached the guest chat limit. Please log in to continue using the chatbot.",
-                "remaining": 0,
+                "reply": reply,
+                "remaining": remaining,
                 "logged_in": False,
                 "username": None
             }
 
-        request.session["guest_chat_count"] = current_count + 1
-        remaining = GUEST_CHAT_LIMIT - request.session["guest_chat_count"]
-
         reply = website_info_bot.reply(
             req.message,
-            username=None,
-            logged_in=False
+            username=username,
+            logged_in=True
         )
 
         return {
             "reply": reply,
-            "remaining": remaining,
-            "logged_in": False,
-            "username": None
+            "remaining": None,
+            "logged_in": True,
+            "username": username
         }
 
-    reply = website_info_bot.reply(
-        req.message,
-        username=username,
-        logged_in=True
-    )
+    except Exception as e:
+        success = False
+        error = str(e)
+        reply = "Sorry, something went wrong."
+        print("Website info bot error:", e)
 
-    return {
-        "reply": reply,
-        "remaining": None,
-        "logged_in": True,
-        "username": username
-    }
+        return {
+            "reply": reply,
+            "remaining": None,
+            "logged_in": logged_in,
+            "username": username
+        }
+
+    finally:
+        response_time_ms = int((time.perf_counter() - start_time) * 1000)
+
+        save_evaluation_log(
+            request=request,
+            bot_name="website_information",
+            user_input=req.message,
+            bot_output=reply,
+            response_time_ms=response_time_ms,
+            logged_in=logged_in,
+            success=success,
+            error=error,
+        )
 
 
 @app.post("/chat/assignment-brief")
 def assignment_brief_chat(req: ChatRequest, request: Request):
+    start_time = time.perf_counter()
+
     username = request.session.get("username")
+    logged_in = bool(username)
 
-    if not username:
-        return {"reply": "Please log in to use the assignment brief chatbot."}
+    reply = ""
+    success = True
+    error = None
 
-    brief = get_brief_for_user(username)
+    try:
+        if not username:
+            reply = "Please log in to use the assignment brief chatbot."
+            return {"reply": reply}
 
-    if not brief:
-        return {"reply": f"Hi {username}. I could not find a brief linked to your account."}
+        brief = get_brief_for_user(username)
 
-    criteria_rows = get_marking_criteria_for_brief(brief["brief_id"])
+        if not brief:
+            reply = f"Hi {username}. I could not find a brief linked to your account."
+            return {"reply": reply}
 
-    reply = assignment_brief_bot.reply(
-        user_input=req.message,
-        username=username,
-        brief=brief,
-        criteria_rows=criteria_rows,
-    )
+        criteria_rows = get_marking_criteria_for_brief(brief["brief_id"])
 
-    return {"reply": reply}
+        reply = assignment_brief_bot.reply(
+            user_input=req.message,
+            username=username,
+            brief=brief,
+            criteria_rows=criteria_rows,
+        )
+
+        return {"reply": reply}
+
+    except Exception as e:
+        success = False
+        error = str(e)
+        reply = "Sorry, something went wrong."
+        print("Assignment brief bot error:", e)
+        return {"reply": reply}
+
+    finally:
+        response_time_ms = int((time.perf_counter() - start_time) * 1000)
+
+        save_evaluation_log(
+            request=request,
+            bot_name="assignment_brief",
+            user_input=req.message,
+            bot_output=reply,
+            response_time_ms=response_time_ms,
+            logged_in=logged_in,
+            success=success,
+            error=error,
+        )
 
 
 @app.get("/")
