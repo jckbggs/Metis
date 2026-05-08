@@ -44,8 +44,21 @@ fetch("/api/me", { credentials: "same-origin" })
     if (!loginLink) return;
 
 if (data.logged_in) {
-  loginLink.style.display = 'none';
+  loginLink.style.display = "none";
+
+  const sideMenu = document.getElementById("sideMenu");
+
+  if (sideMenu && data.username === "admin" && !document.getElementById("evaluationDashboardLink")) {
+    const adminLink = document.createElement("a");
+    adminLink.href = "/evaluation-dashboard";
+    adminLink.id = "evaluationDashboardLink";
+    adminLink.textContent = "Evaluation Dashboard";
+
+    sideMenu.appendChild(adminLink);
+  }
+
   const firstLetter = data.username.charAt(0).toUpperCase();
+
   const userBlock = document.createElement("div");
   userBlock.className = "side-menu-user";
   userBlock.innerHTML =
@@ -60,8 +73,10 @@ if (data.logged_in) {
         '<line x1="21" y1="12" x2="9" y2="12"/>' +
       '</svg>' +
     '</a>';
-  const sideMenu = document.getElementById('sideMenu');
-  if (sideMenu) sideMenu.appendChild(userBlock);
+
+  if (sideMenu && !document.querySelector(".side-menu-user")) {
+    sideMenu.appendChild(userBlock);
+  }
 }
   })
   .catch(function () {});

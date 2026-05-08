@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Metis | Evaluation Dashboard</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/styles.css" />
+
+  <style>
+    .dashboard-wrapper {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .dashboard-note {
+      color: #d0d0d0;
+      margin-bottom: 1rem;
+      line-height: 1.6;
+    }
+
+    .dashboard-actions {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .dashboard-btn {
+      padding: 10px 14px;
+      border: none;
+      border-radius: 10px;
+      background: #3b82f6;
+      color: white;
+      font-family: 'Cinzel', serif;
+      cursor: pointer;
+    }
+
+    .dashboard-btn:hover {
+      background: #2563eb;
+    }
+
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .metric-card {
+      background: #0a0a1a;
+      border: 1px solid #1a1a3e;
+      border-radius: 16px;
+      padding: 18px;
+      text-align: center;
+    }
+
+    .metric-card h3 {
+      color: #8a8a8a;
+      font-size: 13px;
+      margin-bottom: 10px;
+    }
+
+    .metric-card p {
+      color: #ffffff;
+      font-size: 22px;
+      font-weight: 700;
+    }
+
+    .dashboard-section {
+      background: #0a0a1a;
+      border: 1px solid #1a1a3e;
+      border-radius: 18px;
+      padding: 20px;
+      margin-bottom: 1.5rem;
+    }
+
+    .dashboard-section h2 {
+      margin-bottom: 14px;
+      color: #ffffff;
+    }
+
+    .table-wrapper {
+      overflow-x: auto;
+      max-height: 540px;
+      overflow-y: auto;
+      border-radius: 12px;
+      border: 1px solid #1a1a2e;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 1000px;
+      background: #050510;
+    }
+
+    th,
+    td {
+      padding: 12px;
+      border-bottom: 1px solid #1a1a2e;
+      text-align: left;
+      vertical-align: top;
+      font-size: 13px;
+      color: #d0d0d0;
+    }
+
+    th {
+      color: #ffffff;
+      background: #0f1022;
+      position: sticky;
+      top: 0;
+      z-index: 1;
+    }
+
+    .message-cell {
+      max-width: 300px;
+      white-space: normal;
+      line-height: 1.5;
+    }
+
+    .status-success {
+      color: #22c55e;
+      font-weight: 700;
+    }
+
+    .status-fail {
+      color: #ef4444;
+      font-weight: 700;
+    }
+
+    .dashboard-warning {
+      background: #1a0f0f;
+      border: 1px solid #7f1d1d;
+      color: #fecaca;
+      padding: 12px;
+      border-radius: 12px;
+      margin-bottom: 1rem;
+      display: none;
+    }
+
+    @media (max-width: 950px) {
+      .dashboard-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 600px) {
+      .dashboard-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="page-wrapper">
+
+    <header class="site-header">
+      <button class="hamburger" onclick="toggleMenu()" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <div class="logo">
+        <img src="/static/logo4.png" alt="Metis Logo" />
+        <span>Metis</span>
+      </div>
+
+      <div class="header-spacer"></div>
+    </header>
+
+    <div class="menu-overlay" onclick="toggleMenu()"></div>
+
+    <nav class="side-menu" id="sideMenu">
+      <button class="menu-close" onclick="toggleMenu()" aria-label="Close menu">✕</button>
+
+      <a href="/">Home</a>
+      <a href="/login">Login</a>
+
+      <div class="side-menu-dropdown" id="botsDropdown">
+        <span class="side-menu-dropdown-toggle" id="botsToggle">Bots &#9658;</span>
+      </div>
+
+      <a href="/your-calendar">Your Calendar</a>
+      <a href="/faqs">FAQs</a>
+      <a href="/about">About Us</a>
+      <a href="/contact">Contact Us</a>
+    </nav>
+
+    <div class="side-menu-dropdown-items" id="botsSubmenu">
+      <a href="/assignment-brief">Assignment Brief Info</a>
+      <a href="/mitigating-circumstances">Mitigating Circumstances</a>
+      <a href="/assignment-calendar">Assignment Calendars Creator</a>
+      <a href="/assignment-reviewer">Assignment Reviewer</a>
+      <a href="/website-information">Website Information</a>
+    </div>
+
+    <main class="hero-section">
+      <div class="dashboard-wrapper">
+        <h1>Evaluation Dashboard</h1>
+
+        <p class="dashboard-note">
+          This dashboard displays anonymised chatbot evaluation data. Usernames are not stored in the evaluation logs.
+          The data includes chatbot input, chatbot output, response time, chatbot type, success status, and participant ID.
+        </p>
+
+        <div id="dashboardWarning" class="dashboard-warning"></div>
+
+        <div class="dashboard-actions">
+          <button class="dashboard-btn" onclick="loadEvaluationData()">Refresh Data</button>
+          <button class="dashboard-btn" onclick="downloadCsv()">Download CSV</button>
+        </div>
+
+        <section class="dashboard-grid">
+          <div class="metric-card">
+            <h3>Total Interactions</h3>
+            <p id="totalInteractions">0</p>
+          </div>
+
+          <div class="metric-card">
+            <h3>Average Response</h3>
+            <p id="averageResponse">0 ms</p>
+          </div>
+
+          <div class="metric-card">
+            <h3>Success Rate</h3>
+            <p id="successRate">0%</p>
+          </div>
+
+          <div class="metric-card">
+            <h3>Participants</h3>
+            <p id="uniqueParticipants">0</p>
+          </div>
+
+          <div class="metric-card">
+            <h3>Most Used Bot</h3>
+            <p id="mostUsedBot">-</p>
+          </div>
+        </section>
+
+        <section class="dashboard-section">
+          <h2>Interaction Logs</h2>
+
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>Time</th>
+                  <th>Participant</th>
+                  <th>Account</th>
+                  <th>Bot</th>
+                  <th>User Input</th>
+                  <th>Bot Output</th>
+                  <th>Response Time</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+
+              <tbody id="logsTableBody">
+                <tr>
+                  <td colspan="8">No logs loaded.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <p>&copy; 2026 Metis. All rights reserved.</p>
+    </footer>
+  </div>
+
+  <script src="/static/scripts.js"></script>
+  <script src="/static/evaluation-dashboard.js"></script>
+</body>
+</html>

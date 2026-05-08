@@ -23,6 +23,7 @@ from database.auth_create import create_user
 from database.brief_create import create_demo_brief_for_user
 from database.brief_queries import get_brief_for_user, get_marking_criteria_for_brief
 
+
 app = FastAPI()
 
 load_dotenv(Path(__file__).resolve().parent / "chatbot" / ".env", override=True)
@@ -43,6 +44,7 @@ website_info_bot = WebsiteInfoBot()
 assignment_brief_bot = AssignmentBriefBot()
 
 GUEST_CHAT_LIMIT = 15
+ADMIN_USERNAME = "admin"
 
 
 class ChatRequest(BaseModel):
@@ -51,8 +53,8 @@ class ChatRequest(BaseModel):
 
 def get_anonymous_participant_id(request: Request) -> str:
     """
-    Creates a random anonymous participant ID
-    This avoids saving real usernames for evaluation
+    Creates one anonymous participant ID per browser session.
+    This avoids storing the real username in evaluation logs.
     """
     if "anonymous_participant_id" not in request.session:
         request.session["anonymous_participant_id"] = "P-" + str(uuid.uuid4())[:8]
@@ -72,9 +74,7 @@ def save_evaluation_log(
 ):
     """
     Saves anonymised chatbot evaluation data to a JSONL file.
-
     It does not save the real username.
-    It saves participant_id instead.
     """
     try:
         EVALUATION_LOG_PATH.parent.mkdir(parents=True, exist_ok=True)
@@ -172,7 +172,90 @@ def api_me(request: Request):
     username = request.session.get("username")
     return {
         "logged_in": bool(username),
-        "username": username if username else None
+        "username": username if username else None,
+        "is_admin": username == ADMIN_USERNAME
+    }
+
+
+@app.get("/api/evaluation/logs")
+def evaluation_logs(request: Request):
+    username = request.session.get("username")
+
+    if username != ADMIN_USERNAME:
+        return {
+            "error": "Admin access required."
+        }
+
+    empty_summary = {
+        "total_interactions": 0,
+        "average_response_time_ms": 0,
+        "success_rate": 0,
+        "unique_participants": 0,
+        "most_used_bot": None
+    }
+
+    if not EVALUATION_LOG_PATH.exists():
+        return {
+            "logs": [],
+            "summary": empty_summary,
+            "bot_counts": {}
+        }
+
+    logs = []
+
+    with EVALUATION_LOG_PATH.open("r", encoding="utf-8") as f:
+        for line in f:
+            try:
+                logs.append(json.loads(line))
+            except json.JSONDecodeError:
+                continue
+
+    total = len(logs)
+
+    if total == 0:
+        return {
+            "logs": [],
+            "summary": empty_summary,
+            "bot_counts": {}
+        }
+
+    response_times = [
+        item.get("response_time_ms", 0)
+        for item in logs
+        if isinstance(item.get("response_time_ms"), int)
+    ]
+
+    average_response_time = (
+        round(sum(response_times) / len(response_times), 2)
+        if response_times else 0
+    )
+
+    successful = sum(1 for item in logs if item.get("success") is True)
+    success_rate = round((successful / total) * 100, 2)
+
+    participants = {
+        item.get("participant_id")
+        for item in logs
+        if item.get("participant_id")
+    }
+
+    bot_counts = {}
+    for item in logs:
+        bot_name = item.get("bot_name", "unknown")
+        bot_counts[bot_name] = bot_counts.get(bot_name, 0) + 1
+
+    most_used_bot = max(bot_counts, key=bot_counts.get) if bot_counts else None
+
+    return {
+        "logs": logs,
+        "summary": {
+            "total_interactions": total,
+            "average_response_time_ms": average_response_time,
+            "success_rate": success_rate,
+            "unique_participants": len(participants),
+            "most_used_bot": most_used_bot
+        },
+        "bot_counts": bot_counts
     }
 
 
@@ -375,6 +458,16 @@ def website_information_page():
 @app.get("/assignment-brief")
 def assignment_brief_page():
     return FileResponse(WEBSITE_DIR / "assignment-brief.html")
+
+
+@app.get("/evaluation-dashboard")
+def evaluation_dashboard_page(request: Request):
+    username = request.session.get("username")
+
+    if username != ADMIN_USERNAME:
+        return RedirectResponse(url="/login", status_code=303)
+
+    return FileResponse(WEBSITE_DIR / "evaluation-dashboard.html")
 
 
 @app.get("/contact")
