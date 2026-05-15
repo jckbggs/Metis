@@ -504,6 +504,6 @@ def your_calendar_page():
 def assignment_calendar_page():
     return FileResponse(WEBSITE_DIR / "assignment-calendar.html")
 
-@app.get("/demo-report")
-def demo_reports_page():
-    return FileResponse(WEBSITE_DIR / "demo_report.html")
+@app.get("/your-reports")
+def your_reports_page():
+    return FileResponse(WEBSITE_DIR / "your_reports.html")

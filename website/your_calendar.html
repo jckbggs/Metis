@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Metis | Your Calendar</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/styles.css" />
+
+  <!-- FullCalendar -->
+  <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.css" rel="stylesheet">
+</head>
+
+<body>
+  <div class="page-wrapper">
+
+    <!-- Header -->
+    <header class="site-header">
+      <button class="hamburger" onclick="toggleMenu()" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+
+      <div class="logo">
+        <img src="/static/logo4.png" alt="Metis Logo" />
+        <span>Metis</span>
+      </div>
+
+      <div class="header-spacer"></div>
+    </header>
+
+    <!-- Overlay -->
+    <div class="menu-overlay" onclick="toggleMenu()"></div>
+
+    <!-- Side Menu -->
+    <nav class="side-menu" id="sideMenu">
+      <button class="menu-close" onclick="toggleMenu()" aria-label="Close menu">✕</button>
+
+      <a href="/">Home</a>
+      <a href="/login">Login</a>
+
+      <div class="side-menu-dropdown" id="botsDropdown">
+        <span class="side-menu-dropdown-toggle" id="botsToggle">Bots &#9658;</span>
+      </div>
+
+      <a href="/your-calendar">Your Calendar</a>
+        <a href="/your-reports">Your Reports</a>
+      <a href="/faqs">FAQs</a>
+      <a href="/about">About Us</a>
+      <a href="/contact">Contact Us</a>
+    </nav>
+
+    <!-- Bots Submenu -->
+    <div class="side-menu-dropdown-items" id="botsSubmenu">
+      <a href="/assignment-brief">Assignment Brief Info</a>
+      <a href="/mitigating-circumstances">Mitigating Circumstances</a>
+      <a href="/assignment-calendar">Assignment Calendars Creator</a>
+      <a href="/assignment-reviewer">Assignment Reviewer</a>
+      <a href="/website-information">Website Information</a>
+    </div>
+
+    <!-- Main Content -->
+    <main class="hero-section">
+      <div class="hero-left">
+
+        <h1>Your Calendar</h1>
+
+        <p class="hero-text">
+          Organise your study schedule, assignment deadlines, and exam dates.
+        </p>
+
+        <!-- Calendar Controls -->
+        <div class="info-box">
+
+          <div class="calendar-controls">
+            <input type="text" id="eventTitle" placeholder="Event title">
+
+            <select id="eventCategory">
+              <option value="study">Study Session</option>
+              <option value="assignment">Assignment</option>
+              <option value="due">Due Date</option>
+              <option value="exam">Exam</option>
+            </select>
+
+            <button id="addEventBtn">Create Event</button>
+          </div>
+
+          <!-- Legend -->
+          <div class="calendar-legend">
+            <div><span class="legend-box study"></span> Study</div>
+            <div><span class="legend-box assignment"></span> Assignment</div>
+            <div><span class="legend-box due"></span> Due Date</div>
+            <div><span class="legend-box exam"></span> Exam</div>
+          </div>
+
+        </div>
+
+        <!-- Calendar -->
+        <div class="info-box">
+          <div id="calendar"></div>
+        </div>
+
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+      <p>&copy; 2026 Metis. All rights reserved.</p>
+    </footer>
+
+  </div>
+
+  <!-- FullCalendar -->
+  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
+
+  <!-- Existing scripts -->
+  <script src="/static/scripts.js"></script>
+
+  <!-- Calendar Script -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+
+      const calendarEl = document.getElementById("calendar");
+
+      const categoryColours = {
+        study: "#3b82f6",
+        assignment: "#10b981",
+        due: "#f59e0b",
+        exam: "#ef4444"
+      };
+
+      let selectedDate = null;
+
+      const calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: "dayGridMonth",
+        editable: true,
+        selectable: true,
+        height: "auto",
+
+        headerToolbar: {
+          left: "prev,next today",
+          center: "title",
+          right: "dayGridMonth,timeGridWeek,timeGridDay"
+        },
+
+        events: [
+          {
+            title: "📚 Study Session",
+            start: "2026-05-18",
+            color: categoryColours.study
+          },
+          {
+            title: "✍️ Writing Assignment",
+            start: "2026-05-20",
+            color: categoryColours.assignment
+          },
+          {
+            title: "⚠️ Assignment Due",
+            start: "2026-05-23",
+            color: categoryColours.due
+          },
+          {
+            title: "📝 Biology Exam",
+            start: "2026-05-28",
+            color: categoryColours.exam
+          }
+        ],
+
+        select: function(info) {
+          selectedDate = info.startStr;
+        },
+
+        eventClick: function(info) {
+
+          const action = confirm(
+            "Press OK if you completed this event.\nPress Cancel if you missed it."
+          );
+
+          if (action) {
+            info.event.setProp("borderColor", "#22c55e");
+            info.event.setProp("borderWidth", "3px");
+          } else {
+            info.event.setProp("borderColor", "#dc2626");
+            info.event.setProp("borderWidth", "3px");
+          }
+        }
+      });
+
+      calendar.render();
+
+      document.getElementById("addEventBtn").addEventListener("click", function () {
+
+        const title = document.getElementById("eventTitle").value.trim();
+        const category = document.getElementById("eventCategory").value;
+
+        if (!title) {
+          alert("Please enter an event title.");
+          return;
+        }
+
+        if (!selectedDate) {
+          alert("Please select a date on the calendar first.");
+          return;
+        }
+
+        calendar.addEvent({
+          title: title,
+          start: selectedDate,
+          color: categoryColours[category]
+        });
+
+        document.getElementById("eventTitle").value = "";
+      });
+
+    });
+  </script>
+
+</body>
+</html>
+```

@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Metis | Your Reports</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/styles.css" />
+</head>
+
+<body>
+  <div class="page-wrapper">
+
+    <!-- Header -->
+    <header class="site-header">
+      <button class="hamburger" onclick="toggleMenu()" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+
+      <div class="logo">
+        <img src="/static/logo4.png" alt="Metis Logo" />
+        <span>Metis</span>
+      </div>
+
+      <div class="header-spacer"></div>
+    </header>
+
+    <!-- Overlay -->
+    <div class="menu-overlay" onclick="toggleMenu()"></div>
+
+    <!-- Side Menu -->
+    <nav class="side-menu" id="sideMenu">
+      <button class="menu-close" onclick="toggleMenu()" aria-label="Close menu">✕</button>
+
+      <a href="/">Home</a>
+      <a href="/login">Login</a>
+
+      <div class="side-menu-dropdown" id="botsDropdown">
+        <span class="side-menu-dropdown-toggle" id="botsToggle">
+          Bots &#9658;
+        </span>
+      </div>
+
+      <a href="/your-calendar">Your Calendar</a>
+      <a href="/your-reports">Your Reports</a>
+      <a href="/faqs">FAQs</a>
+      <a href="/about">About Us</a>
+      <a href="/contact">Contact Us</a>
+    </nav>
+
+    <!-- Bots Submenu -->
+    <div class="side-menu-dropdown-items" id="botsSubmenu">
+      <a href="/assignment-brief">Assignment Brief Info</a>
+      <a href="/mitigating-circumstances">Mitigating Circumstances</a>
+      <a href="/assignment-calendar">Assignment Calendars Creator</a>
+      <a href="/assignment-reviewer">Assignment Reviewer</a>
+      <a href="/website-information">Website Information</a>
+    </div>
+
+    <!-- Main Content -->
+    <main class="hero-section">
+      <div class="hero-left">
+
+        <h1>Your Reports</h1>
+
+        <p class="hero-text">
+          Review your AI-generated assignment feedback reports and estimated grades.
+        </p>
+
+        <!-- Report 1 -->
+        <div class="report-card">
+
+          <button class="report-toggle">
+            Software Engineering Coursework Review
+            <span>65% - 70%</span>
+          </button>
+
+          <div class="report-content">
+
+            <div class="report-section">
+              <h3>Overall Feedback</h3>
+
+              <p>
+                Your coursework demonstrates strong technical understanding
+                and good structure overall. The implementation is functional
+                and your documentation explains the main features effectively.
+              </p>
+            </div>
+
+            <div class="report-section">
+              <h3>Marking Criteria</h3>
+
+              <div class="criteria-item">
+
+                <div class="criteria-top">
+                  <span>Technical Implementation</span>
+                  <span>72%</span>
+                </div>
+
+                <div class="criteria-bar">
+                  <div class="criteria-fill" style="width:72%"></div>
+                </div>
+
+                <p>
+                  Strong implementation with good functionality and clear logic.
+                </p>
+
+              </div>
+
+              <div class="criteria-item">
+
+                <div class="criteria-top">
+                  <span>Documentation Quality</span>
+                  <span>66%</span>
+                </div>
+
+                <div class="criteria-bar">
+                  <div class="criteria-fill" style="width:66%"></div>
+                </div>
+
+                <p>
+                  Documentation is understandable but could include more
+                  screenshots and evaluation detail.
+                </p>
+
+              </div>
+
+              <div class="criteria-item">
+
+                <div class="criteria-top">
+                  <span>Academic Writing</span>
+                  <span>63%</span>
+                </div>
+
+                <div class="criteria-bar">
+                  <div class="criteria-fill" style="width:63%"></div>
+                </div>
+
+                <p>
+                  Writing is mostly clear but contains some grammar issues
+                  and repetition.
+                </p>
+
+              </div>
+
+            </div>
+
+            <div class="report-grid">
+
+              <div class="report-box strengths">
+
+                <h3>Strengths</h3>
+
+                <ul>
+                  <li>Strong technical functionality</li>
+                  <li>Good interface structure</li>
+                  <li>Clear project organisation</li>
+                </ul>
+
+              </div>
+
+              <div class="report-box weaknesses">
+
+                <h3>Weaknesses</h3>
+
+                <ul>
+                  <li>Limited evaluation depth</li>
+                  <li>Some referencing inconsistencies</li>
+                  <li>Minor grammar mistakes</li>
+                </ul>
+
+              </div>
+
+            </div>
+
+            <div class="report-section">
+
+              <h3>Suggested Improvements</h3>
+
+              <ul>
+                <li>Add more critical evaluation and testing discussion.</li>
+                <li>Expand screenshots and interface explanations.</li>
+                <li>Improve Harvard referencing consistency.</li>
+              </ul>
+
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Report 2 -->
+        <div class="report-card">
+
+          <button class="report-toggle">
+            Database Systems Assignment Review
+            <span>58% - 62%</span>
+          </button>
+
+          <div class="report-content">
+
+            <div class="report-section">
+
+              <h3>Overall Feedback</h3>
+
+              <p>
+                Your database design meets the minimum requirements and
+                demonstrates understanding of relational concepts.
+                However, some normalisation and justification sections
+                require more detail.
+              </p>
+
+            </div>
+
+            <div class="report-section">
+
+              <h3>Marking Criteria</h3>
+
+              <div class="criteria-item">
+
+                <div class="criteria-top">
+                  <span>Database Design</span>
+                  <span>64%</span>
+                </div>
+
+                <div class="criteria-bar">
+                  <div class="criteria-fill" style="width:64%"></div>
+                </div>
+
+                <p>
+                  The entity relationships are mostly accurate and the schema
+                  demonstrates understanding of relational databases.
+                </p>
+
+              </div>
+
+              <div class="criteria-item">
+
+                <div class="criteria-top">
+                  <span>Normalisation</span>
+                  <span>55%</span>
+                </div>
+
+                <div class="criteria-bar">
+                  <div class="criteria-fill" style="width:55%"></div>
+                </div>
+
+                <p>
+                  Some normalisation steps are incomplete and require clearer
+                  explanation and justification.
+                </p>
+
+              </div>
+
+              <div class="criteria-item">
+
+                <div class="criteria-top">
+                  <span>SQL Queries</span>
+                  <span>61%</span>
+                </div>
+
+                <div class="criteria-bar">
+                  <div class="criteria-fill" style="width:61%"></div>
+                </div>
+
+                <p>
+                  Queries function correctly overall but lack advanced joins
+                  and optimisation techniques.
+                </p>
+
+              </div>
+
+            </div>
+
+            <div class="report-grid">
+
+              <div class="report-box strengths">
+
+                <h3>Strengths</h3>
+
+                <ul>
+                  <li>Good understanding of core database concepts</li>
+                  <li>Logical table structure and relationships</li>
+                  <li>Queries achieve the required functionality</li>
+                </ul>
+
+              </div>
+
+              <div class="report-box weaknesses">
+
+                <h3>Weaknesses</h3>
+
+                <ul>
+                  <li>Limited explanation of normalisation stages</li>
+                  <li>Minimal advanced SQL functionality</li>
+                  <li>Some sections lack academic justification</li>
+                </ul>
+
+              </div>
+
+            </div>
+
+            <div class="report-section">
+
+              <h3>Suggested Improvements</h3>
+
+              <ul>
+                <li>Provide deeper explanation of design decisions.</li>
+                <li>Improve normalisation examples.</li>
+                <li>Add more advanced SQL query examples.</li>
+                <li>Include justification for indexing and optimisation choices.</li>
+              </ul>
+
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+      <p>&copy; 2026 Metis. All rights reserved.</p>
+    </footer>
+
+  </div>
+
+  <script src="/static/scripts.js"></script>
+
+  <!-- Report Toggle Script -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+
+      const toggles = document.querySelectorAll(".report-toggle");
+
+      toggles.forEach(toggle => {
+
+        toggle.addEventListener("click", function () {
+
+          const content = this.nextElementSibling;
+
+          this.classList.toggle("active");
+
+          if (content.style.maxHeight) {
+            content.style.maxHeight = null;
+          } else {
+            content.style.maxHeight =
+              content.scrollHeight + "px";
+          }
+
+        });
+
+      });
+
+    });
+  </script>
+
+</body>
+</html>

@@ -664,3 +664,272 @@ a {
 .side-menu-logout:hover {
   color: #f87171;
 }
+
+/* ── Calendar ── */
+
+#calendar {
+  width: 100%;
+  min-height: 750px;
+}
+
+.calendar-controls {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.calendar-controls input,
+.calendar-controls select {
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid #1a1a3e;
+  background: #050510;
+  color: white;
+  font-family: 'Cinzel', serif;
+}
+
+.calendar-controls input:focus,
+.calendar-controls select:focus {
+  outline: none;
+  border-color: #3b82f6;
+}
+
+.calendar-controls button {
+  padding: 12px 18px;
+  border: none;
+  border-radius: 10px;
+  background: #3b82f6;
+  color: white;
+  font-family: 'Cinzel', serif;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.calendar-controls button:hover {
+  background: #2563eb;
+}
+
+.calendar-legend {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  color: #d0d0d0;
+  margin-top: 10px;
+}
+
+.legend-box {
+  width: 16px;
+  height: 16px;
+  display: inline-block;
+  border-radius: 4px;
+  margin-right: 8px;
+}
+
+.legend-box.study {
+  background: #3b82f6;
+}
+
+.legend-box.assignment {
+  background: #10b981;
+}
+
+.legend-box.due {
+  background: #f59e0b;
+}
+
+.legend-box.exam {
+  background: #ef4444;
+}
+
+/* FullCalendar Theme */
+
+.fc {
+  color: #d0d0d0;
+  font-family: 'Cinzel', serif;
+}
+
+.fc-toolbar-title {
+  color: white;
+}
+
+.fc-button {
+  background: #3b82f6 !important;
+  border: none !important;
+}
+
+.fc-button:hover {
+  background: #2563eb !important;
+}
+
+.fc-daygrid-day {
+  background: #050510;
+  border-color: #1a1a3e !important;
+}
+
+.fc-scrollgrid {
+  border-color: #1a1a3e !important;
+}
+
+.fc-col-header-cell {
+  background: #0a0a1a;
+}
+
+.fc-event {
+  border-radius: 8px;
+  padding: 2px;
+  cursor: pointer;
+}
+
+.fc-theme-standard td,
+.fc-theme-standard th {
+  border-color: #1a1a3e;
+}
+
+@media (max-width: 700px) {
+
+  .calendar-controls {
+    flex-direction: column;
+  }
+
+  #calendar {
+    min-height: 600px;
+  }
+
+}
+
+/* ── Reports Page ── */
+
+.report-card {
+  background: #0a0a1a;
+  border: 1px solid #1a1a3e;
+  border-radius: 18px;
+  margin-bottom: 24px;
+  overflow: hidden;
+}
+
+.report-toggle {
+  width: 100%;
+  background: none;
+  border: none;
+  color: white;
+  padding: 22px;
+  text-align: left;
+  font-family: 'Cinzel', serif;
+  font-size: 18px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: 0.2s;
+}
+
+.report-toggle:hover {
+  background: rgba(59, 130, 246, 0.05);
+}
+
+.report-toggle span {
+  color: #3b82f6;
+  font-size: 16px;
+}
+
+.report-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease;
+  padding: 0 22px;
+}
+
+.report-section {
+  margin-bottom: 28px;
+}
+
+.report-section h3 {
+  margin-bottom: 12px;
+  color: #3b82f6;
+}
+
+.report-section p,
+.report-section li {
+  color: #d0d0d0;
+  line-height: 1.7;
+}
+
+.report-section ul {
+  padding-left: 20px;
+}
+
+.criteria-item {
+  margin-bottom: 20px;
+}
+
+.criteria-top {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  color: white;
+}
+
+.criteria-bar {
+  width: 100%;
+  height: 12px;
+  background: #050510;
+  border-radius: 999px;
+  overflow: hidden;
+  border: 1px solid #1a1a3e;
+  margin-bottom: 8px;
+}
+
+.criteria-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #2563eb, #3b82f6);
+  border-radius: 999px;
+}
+
+.report-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  margin-bottom: 28px;
+}
+
+.report-box {
+  background: #050510;
+  border: 1px solid #1a1a3e;
+  border-radius: 14px;
+  padding: 18px;
+}
+
+.report-box h3 {
+  margin-bottom: 12px;
+}
+
+.report-box ul {
+  padding-left: 18px;
+}
+
+.report-box li {
+  margin-bottom: 8px;
+}
+
+.strengths h3 {
+  color: #22c55e;
+}
+
+.weaknesses h3 {
+  color: #ef4444;
+}
+
+@media (max-width: 700px) {
+
+  .report-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .report-toggle {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+}
